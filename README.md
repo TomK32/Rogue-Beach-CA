@@ -42,6 +42,19 @@ The checklist according to mikipedia:
 4. Permadeath (just wait till you fall and hit the rocks)
 5. Single player
 
+## Screenshots
+
+    +-------+
+    |       |
+    |   │   |
+    | @ │   |
+    |   │   |
+    |       |
+    +-------+
+
+Surfer carrying a board
+
+
 ## Credits
 
 * LÖVE2d
