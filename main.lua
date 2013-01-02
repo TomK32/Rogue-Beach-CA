@@ -6,39 +6,29 @@
 -- (C) 2012-2013 Thomas R. Koll
 
 require 'lib/middleclass'
-
-game = {
-  graphics = {
-    fullscreen = false,
-    mode = { height = love.graphics.getHeight(), width = love.graphics.getWidth() }
-  },
-  fonts = {},
-}
-
-function game.createFonts(offset)
-  return {
-    lineHeight = (10 + offset) * 1.7,
-    small = love.graphics.newFont(10 + offset),
-    regular = love.graphics.newFont(14 + offset),
-    large = love.graphics.newFont(24 + offset),
-    very_large = love.graphics.newFont(48 + offset)
-  }
-end
+require 'game'
+require 'views/view'
+require 'game_states/game_state'
+require 'game_states/start_menu'
 
 function love.load()
-  game.fonts = game.createFonts(0)
+  game:createFonts(0)
+  game.current_state = StartMenu()
 end
 
 function love.draw()
-
+  if not game.current_state then return end
+  game.current_state:draw()
 end
 
-
 function love.keypressed(key)
+  if not game.current_state then return end
+  game.current_state:keypressed(key)
 end
 
 function love.update(dt)
-
+  if not game.current_state then return end
+  game.current_state:update(dt)
 end
 
 
