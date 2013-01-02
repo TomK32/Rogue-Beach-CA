@@ -25,8 +25,12 @@ function game:setMode(mode)
   else
     self:createFonts(0)
   end
+  if self.view.updateDisplay then
+    self.view.updateDisplay()
+  end
 end
 
 
 function game:start()
+  game.current_state = MapState()
 end

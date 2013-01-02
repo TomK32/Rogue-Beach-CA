@@ -10,10 +10,12 @@ require 'game'
 require 'views/view'
 require 'game_states/game_state'
 require 'game_states/start_menu'
+require 'game_states/map_state'
 
 function love.load()
   game:createFonts(0)
   game.current_state = StartMenu()
+  game:start()
 end
 
 function love.draw()

@@ -32,15 +32,17 @@ score if some camera is waiting to get a shot of the surfers.
 Trade your score for some hot speedos, flashy bikinis, boards, magic
 mushrooms, or a tasty cheeseburger while you are at the beach.
 
-## Is is really roguelike?
+## Is this really roguelike?
 
 The checklist according to mikipedia:
 
-1. Prodecually generated, not could be more chaotic than waves
+1. Prodecually generated, nothing could be more chaotic than waves
 2. Turnbased combat (it sure is!)
 3. Magic items (Magic Mushrooms from Old Willi's Hippy supply)
 4. Permadeath (just wait till you fall and hit the rocks)
 5. Single player
+
+So it is, strangely, a roguelike.
 
 ## Screenshots
 
@@ -54,12 +56,18 @@ The checklist according to mikipedia:
 
 Surfer carrying a board
 
-
 ## Credits
 
-* LÖVE2d
+* LÖVE2d and the following libraries:
+  * Quickie
 * ananasblau's own games Kollum and Cross Country Running
 
+## Participate
+
+OneGameAMonth is about working together, that's why we share all this
+sourcecode onto github, that's why you could contribute a few pieces to
+this game. Art, music, code, mods, everything is possible.
+
 ## Authors
-* Thomas R. Koll (aka @ananasblau and @TomK32)
+* Thomas R. Koll (aka @ananasblau and @TomK32) http://ananasblau.com/games
 
