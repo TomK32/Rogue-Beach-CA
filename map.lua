@@ -17,6 +17,7 @@ function Map:initialize(width, height)
 end
 
 function Map:place(entity)
+  entity.map = self
   if not self.layers[entity.position.z] then
     self.layers[entity.position.z] = {}
   end

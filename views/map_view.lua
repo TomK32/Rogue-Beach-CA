@@ -1,0 +1,84 @@
+
+MapView = class("MapView", View)
+MapView:include({
+  map = nil,
+  top_left = { x = 0, y = 0 }, -- offset
+  scale = { x = 10, y = 10 },
+  canvas = nil,
+})
+
+function MapView:initialize(map)
+  self.map = map
+  self:updateDisplay()
+  self.draw_cursor = false
+  self.canvas = love.graphics.newCanvas(self.display.width, self.display.height)
+  self:update()
+end
+
+function MapView:updateDisplay()
+  self.display = {
+    x = 10,
+    y = 10,
+    width = game.graphics.mode.width - 20,
+    height = game.graphics.mode.height - 20
+  }
+end
+
+function MapView:drawContent()
+  if self.canvas then
+    love.graphics.setColor(255,255,255,255)
+    love.graphics.draw(self.canvas, 0, 0)
+  end
+end
+
+function MapView:rectangle(style, colour, x, y)
+  love.graphics.setColor(unpack(colour))
+  love.graphics.rectangle(style, x * self.scale.x, y * self.scale.y, self.scale.x, self.scale.y)
+end
+
+function MapView:print(text, colour, x, y)
+  love.graphics.setColor(unpack(colour))
+  love.graphics.print(text, x * self.scale.x, y * self.scale.y)
+end
+
+function MapView:update()
+  love.graphics.setCanvas(self.canvas)
+  love.graphics.setColor(255,255,255,255)
+  love.graphics.rectangle('fill', 0,0,game.graphics.mode.width, game.graphics.mode.height)
+  love.graphics.setCanvas()
+  return self.canvas
+end
+
+function MapView:centerAt(position)
+  x = position.x - math.floor(self:tiles_x() / 2)
+  y = position.y - math.floor(self:tiles_y() / 2)
+  if math.abs(self.top_left.x - x) >= 1 or math.abs(self.top_left.y - y) >= 1 then
+    self.top_left = {x = x, y = y}
+    self:fixTopLeft()
+  end
+  self:update()
+end
+
+function MapView:moveTopLeft(offset, dontMoveCursor)
+  self.top_left.x = self.top_left.x + 3 * offset.x
+  self.top_left.y = self.top_left.y + 3 * offset.y
+  fixTopLeft()
+  if not dontMoveCursor then
+    self:moveCursor({x = offset.x * 3, y = offset.y * 3}, true)
+  end
+end
+
+function MapView:fixTopLeft()
+  max_x = math.floor(self.map.height - self:tiles_x())
+  if self.top_left.x < 0 then
+    self.top_left.x = 0
+  elseif self.top_left.x > max_x then
+    self.top_left.x = max_x + 1
+  end
+  max_y = math.floor(self.map.height - self:tiles_y())
+  if self.top_left.y < 0 then
+    self.top_left.y = 0
+  elseif self.top_left.y > max_y then
+    self.top_left.y = max_y + 1
+  end
+end
