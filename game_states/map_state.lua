@@ -6,6 +6,7 @@ require 'views/map_view'
 
 require 'entities/entity'
 require 'entities/beach'
+require 'entities/wave'
 
 MapState = class("MapState", GameState)
 function MapState:initialize()
@@ -18,5 +19,11 @@ end
 
 function MapState:draw()
   self.view:draw()
+
+  love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
 end
 
+function MapState:update(dt)
+  self.level:update(dt)
+  self.view:update()
+end

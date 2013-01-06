@@ -5,12 +5,31 @@ MapGenerator = class("MapGenerator")
 
 function MapGenerator:initialize(seed)
   self.seed = seed
+  self:incrementSeed(0)
+  self.dt = { wave = 0 }
+end
+
+function MapGenerator:incrementSeed(dt)
+  self.seed = self.seed + dt
   SimplexNoise.seedP(self.seed)
 end
 
 -- fill a whole map
 function MapGenerator:randomize()
-  self:newBeach()
+  self:newBeach(1, 1/4)
+  self:newWave(1)
+  self:newWave(2)
+  self:newWave(3)
+  self:newBeach(3, 1/7)
+end
+
+function MapGenerator:update(dt)
+  self.dt.wave = self.dt.wave + dt
+  if self.dt.wave > 0.7 then
+    self:incrementSeed(1)
+    self.dt.wave = 0
+    self:newWave(1)
+  end
 end
 
 -- int, int, 0..1, 0..1, int, int
@@ -25,17 +44,37 @@ function MapGenerator:seedPosition(seed_x,seed_y, scale_x, scale_y, offset_x, of
   }
 end
 
-function MapGenerator:newBeach()
+function MapGenerator:newWave(offset_y)
+  print('Add wave')
+  wave_factor = 6
+
+  local tiles = self:fillTiles(1, 1, self.map.width, wave_factor,
+    function(x,y)
+      local w = math.floor(SimplexNoise.Noise2D(x*0.002, y*0.03)*200) % (60+offset_y)
+      if y == wave_factor / 2 then
+        return w * 3
+      else
+        return w
+      end
+    end
+  )
+  return self.map:addEntity(Wave({x = 0, y = self.map.height - offset_y + wave_factor, z = 2, speed = 1 }, tiles))
+end
+
+function MapGenerator:newBeach(z, depth)
+  local tiles = self:fillTiles(1, 1, self.map.width, self.map.height * depth,
+    function(x,y) return math.floor((SimplexNoise.Noise2D(x*0.1, y*0.1) + 1) * 120) % 255 end
+  )
+  return self.map:addEntity(Beach({x = 0, y = 0, z = z}, tiles))
+end
+
+function MapGenerator:fillTiles(x1, y1, x2, y2, callback)
   local tiles = {}
-  for x=1, self.map.width do
+  for x=math.floor(x1), math.floor(x2-x1+1) do
     tiles[x] = {}
-    for y=1, self.map.height/4 do
-      tiles[x][y] = math.floor((SimplexNoise.Noise2D(x*0.1, y*0.1) + 1) * 120) % 255
+    for y=math.floor(y1), math.abs(math.floor(y2-y1+1)) do
+      tiles[x][y] = callback(x,y)
     end
   end
-  return self.map:addEntity(Beach({x = 1, y = 1, z = 1}, tiles))
+  return tiles
 end
-
-function MapGenerator:randomizeBeach()
-end
-

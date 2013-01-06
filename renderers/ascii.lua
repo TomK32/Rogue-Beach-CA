@@ -5,6 +5,9 @@
 local AsciiRenderer = class("AsciiRenderer")
 AsciiRenderer.map_view = nil
 
+function AsciiRenderer:translate(x, y)
+  love.graphics.translate(self:scaledXY(x,y))
+end
 function AsciiRenderer:rectangle(style, color, x, y, tiles_x, tiles_y)
   if not self.map_view then return end
   love.graphics.setColor(unpack(color))
