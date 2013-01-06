@@ -9,14 +9,17 @@
 -- and update and draw functions
 
 Map = class("Map")
-function Map:initialize(width, height)
+function Map:initialize(width, height, generator)
   self.width = width
   self.height = height
   self.layers = {} -- here the entities are stuffed into
   self.map = {}
+  self.generator = generator
+  self.generator.map = self
+  self.generator:randomize()
 end
 
-function Map:place(entity)
+function Map:addEntity(entity)
   entity.map = self
   if not self.layers[entity.position.z] then
     self.layers[entity.position.z] = {}

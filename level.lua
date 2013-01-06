@@ -8,9 +8,8 @@ function Level:initialize(level, seed)
   self.seed = self.seed + self.level
 
 
-  self.map = Map(200,200)
+  self.map = Map(40,30, MapGenerator(self.seed))
 
-  self.generator = MapGenerator(self.seed, self.map)
 end
 
 function Level:update(dt)

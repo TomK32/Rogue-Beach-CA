@@ -3,9 +3,8 @@ LuaBit = require("lib/LuaBit")
 
 MapGenerator = class("MapGenerator")
 
-function MapGenerator:initialize(seed, map)
+function MapGenerator:initialize(seed)
   self.seed = seed
-  self.map = map
   SimplexNoise.seedP(self.seed)
 end
 
@@ -34,9 +33,7 @@ function MapGenerator:newBeach()
       tiles[x][y] = math.floor((SimplexNoise.Noise2D(x*0.1, y*0.1) + 1) * 120) % 255
     end
   end
-  local beach = Beach({x = 1, y = 1, z = 1}, tiles)
-  beach.map = self.map
-  return map:addEntity(beach)
+  return self.map:addEntity(Beach({x = 1, y = 1, z = 1}, tiles))
 end
 
 function MapGenerator:randomizeBeach()

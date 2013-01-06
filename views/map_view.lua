@@ -3,7 +3,7 @@ MapView = class("MapView", View)
 MapView:include({
   map = nil,
   top_left = { x = 0, y = 0 }, -- offset
-  scale = { x = 10, y = 10 },
+  scale = { x = 16, y = 16 },
   canvas = nil,
 })
 
@@ -12,39 +12,35 @@ function MapView:initialize(map)
   self:updateDisplay()
   self.draw_cursor = false
   self.canvas = love.graphics.newCanvas(self.display.width, self.display.height)
-  self:update()
 end
 
 function MapView:updateDisplay()
   self.display = {
     x = 10,
     y = 10,
-    width = game.graphics.mode.width - 20,
-    height = game.graphics.mode.height - 20
+    width = math.min(self.map.width * self.scale.x, game.graphics.mode.width)  - 20,
+    height = math.min(self.map.height * self.scale.y, game.graphics.mode.height) - 20
   }
 end
 
 function MapView:drawContent()
   if self.canvas then
-    love.graphics.setColor(255,255,255,255)
+    love.graphics.setColor(255,255,255,155)
     love.graphics.draw(self.canvas, 0, 0)
   end
 end
 
-function MapView:rectangle(style, colour, x, y)
-  love.graphics.setColor(unpack(colour))
-  love.graphics.rectangle(style, x * self.scale.x, y * self.scale.y, self.scale.x, self.scale.y)
-end
-
-function MapView:print(text, colour, x, y)
-  love.graphics.setColor(unpack(colour))
-  love.graphics.print(text, x * self.scale.x, y * self.scale.y)
-end
-
 function MapView:update()
   love.graphics.setCanvas(self.canvas)
-  love.graphics.setColor(255,255,255,255)
+  love.graphics.setColor(55,55,55,255)
   love.graphics.rectangle('fill', 0,0,game.graphics.mode.width, game.graphics.mode.height)
+  for layer, entities in pairs(self.map.layers) do
+    for i,entity in ipairs(entities) do
+      love.graphics.push()
+      entity:draw()
+      love.graphics.pop()
+    end
+  end
   love.graphics.setCanvas()
   return self.canvas
 end
