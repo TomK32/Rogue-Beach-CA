@@ -16,11 +16,12 @@ end
 
 -- fill a whole map
 function MapGenerator:randomize()
-  self:newBeach(1, 1/4)
-  self:newWave(1)
+  self:newSea() -- layer 4
+  self:newBeach(5, 1/4) -- layer 5
+  self:newWave(1) -- waves are layer 10
   self:newWave(2)
   self:newWave(3)
-  self:newBeach(3, 1/7)
+  self:newBeach(20, 1/7)
 end
 
 function MapGenerator:update(dt)
@@ -61,11 +62,23 @@ function MapGenerator:newWave(offset_y)
   return self.map:addEntity(Wave({x = 0, y = self.map.height - offset_y + wave_factor, z = 2, speed = 1 }, tiles))
 end
 
+function MapGenerator:newSea()
+  -- tiles are all colour values
+  local tiles = self:fillTiles(1, 1, self.map.width, self.map.height,
+    function(x,y) return {
+      50,
+      50,
+      100 + math.floor((SimplexNoise.Noise2D(x*0.005, y*0.1) + 1) * 50) % 50,
+      255 } end
+  )
+  return self.map:addEntity(Plane({x = 0, y = 0, z = 4}, tiles))
+end
+
 function MapGenerator:newBeach(z, depth)
   local tiles = self:fillTiles(1, 1, self.map.width, self.map.height * depth,
-    function(x,y) return math.floor((SimplexNoise.Noise2D(x*0.1, y*0.1) + 1) * 120) % 255 end
+    function(x,y) return { 250, 250, 240 - math.floor((SimplexNoise.Noise2D(x*0.1, y*0.1) + 1) * 130) % 100,255} end
   )
-  return self.map:addEntity(Beach({x = 0, y = 0, z = z}, tiles))
+  return self.map:addEntity(Plane({x = 0, y = 0, z = z}, tiles))
 end
 
 function MapGenerator:fillTiles(x1, y1, x2, y2, callback)
