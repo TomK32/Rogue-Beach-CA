@@ -13,7 +13,7 @@ function Map:initialize(width, height, generator)
   self.width = width
   self.height = height
   self.layers = {} -- here the entities are stuffed into
-  self.map = {}
+  self.layer_indexes = {}
   self.generator = generator
   self.generator.map = self
   self.generator:randomize()
@@ -23,6 +23,8 @@ function Map:addEntity(entity)
   entity.map = self
   if not self.layers[entity.position.z] then
     self.layers[entity.position.z] = {}
+    table.insert(self.layer_indexes, entity.position.z)
+    table.sort(self.layer_indexes, function(a,b) print(a,b); return a < b end)
   end
   table.insert(self.layers[entity.position.z], entity)
 end

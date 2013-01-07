@@ -34,7 +34,8 @@ function MapView:update()
   love.graphics.setCanvas(self.canvas)
   love.graphics.setColor(55,55,55,255)
   love.graphics.rectangle('fill', 0,0,game.graphics.mode.width, game.graphics.mode.height)
-  for layer, entities in pairs(self.map.layers) do
+  for i, layer in ipairs(self.map.layer_indexes) do
+    entities = self.map.layers[layer]
     for i,entity in ipairs(entities) do
       love.graphics.push()
       entity:draw()
