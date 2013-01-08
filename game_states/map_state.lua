@@ -5,7 +5,7 @@ require 'generators/map_generator'
 require 'views/map_view'
 
 require 'entities/entity'
-require 'entities/beach'
+require 'entities/plane'
 require 'entities/wave'
 
 MapState = class("MapState", GameState)
