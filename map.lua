@@ -24,7 +24,7 @@ function Map:addEntity(entity)
   if not self.layers[entity.position.z] then
     self.layers[entity.position.z] = {}
     table.insert(self.layer_indexes, entity.position.z)
-    table.sort(self.layer_indexes, function(a,b) print(a,b); return a < b end)
+    table.sort(self.layer_indexes, function(a,b) return a < b end)
   end
   table.insert(self.layers[entity.position.z], entity)
 end

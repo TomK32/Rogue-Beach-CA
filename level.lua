@@ -9,7 +9,7 @@ function Level:initialize(level, seed)
 
 
   self.generator = MapGenerator(self.seed)
-  self.map = Map(40,30, self.generator)
+  self.map = Map(48,36, self.generator)
 
 end
 
@@ -23,7 +23,6 @@ function Level:update(dt)
         table.remove(self.map.layers[layer], i)
       end
     end
-    --print(layer, #self.map.layers[layer])
   end
   self.generator:update(dt)
 end
