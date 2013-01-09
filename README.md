@@ -68,6 +68,49 @@ OneGameAMonth is about working together, that's why we share all this
 sourcecode onto github, that's why you could contribute a few pieces to
 this game. Art, music, code, mods, everything is possible.
 
+## Features / TODO
+
+* [DONE] Seeded map generator with beach, sea and waves
+* Player moving around
+  * When in water, change from a timer to a round based system
+  * Player laying on surfboard while paddling out to the waves
+  * Player standing up and surfing
+* Waves building up and collapsing
+* Sound for waves, as audio sources with the Player as listener
+* Score awesomeness for certain tricks, time on the wave, etc.
+* Beach huts to trade Awesomeness into some gimmick
+* Customize Player
+  * Surf-board
+  * Tattoos
+  * Bikini
+  * food-stuff
+* NPCs
+  * Surfers
+  * Beachers
+  * Kids building castles
+  * wild-life:
+    * fishies
+    * turtles
+    * birds
+    * sharks
+* Beach-wide ranking for Awesomeness, include NPCs (championsships?)
+* Replay
+  * Record player movements once he's on the board
+  * Store gamestate in keyframes every x seconds
+  * Play movements
+
+## Word to add (honestly I got no clue why?)
+
+* "Rad" "Bogus" "Bodacious" and "Totally" (Joe Robins)
+* "Tabular" (Chris_E)
+* "Far Out" and "Kowabunga" (Efranford)
+
+## Videos, images and stuff
+To give you an impression of the gameplay and development
+
+* 2013-01-09: improved waves: http://www.youtube.com/watch?v=4D-Z3Xbie8w
+* 2013-01-06: first version of the waves http://www.youtube.com/watch?v=jfTced3XgAY
+
 ## Authors
 * Thomas R. Koll (aka @ananasblau and @TomK32) http://ananasblau.com/games
 
