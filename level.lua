@@ -7,9 +7,8 @@ function Level:initialize(level, seed)
 
   self.seed = self.seed + self.level
 
-
   self.generator = MapGenerator(self.seed)
-  self.map = Map(48,36, self.generator)
+  self.map = Map(48,36, self.generator, self)
 
 end
 
@@ -19,7 +18,7 @@ function Level:update(dt)
     for i, entity in pairs(entities) do
       entity:update(dt)
       if entity.dead == true then
-        print("Removing", entity.position.y)
+        --print("Removing", entity.position.y)
         table.remove(self.map.layers[layer], i)
       end
     end
