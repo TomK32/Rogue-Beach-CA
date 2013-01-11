@@ -7,6 +7,7 @@ Player.input_alternatives = {
       down = 'down',
       left = 'left',
       right = 'right',
+      switchState = ' '
     }
   },
   wasd = {
@@ -15,6 +16,7 @@ Player.input_alternatives = {
       down = 's',
       left = 'a',
       right = 'd',
+      switchState = ' '
     }
   }
 }
@@ -47,18 +49,23 @@ end
 
 function Player:setInputs(inputs)
   for direction, key in pairs(inputs.keyboard) do
-    self.inputs[key] = Player.movements[direction]
+    if Player.movements[direction] then
+      self.inputs[key] = Player.movements[direction]
+    elseif type(self[direction]) == 'function' then
+      self.inputs[key] = self[direction]
+    end
   end
 end
 
 function Player:switchState()
   if self.state == 'standing' then
     self.state = 'paddling'
-  elseif self.state == 'padding' then
+  elseif self.state == 'paddling' then
     self.state = 'surfing'
   else
-    self.self = 'standing'
+    self.state = 'standing'
   end
+
   self:setBoard()
 end
 
@@ -71,8 +78,8 @@ function Player:setBoard()
     }
   elseif self.state == 'paddling' then
     self.board = {
-      {x = 0, y = -1, c = '▒'},
-      {x = 0, y = 1, c = '▒'}
+      {x = 0, y = -1, c = '▌'},
+      {x = 0, y = 1, c = '▌'}
     }
   end
 end

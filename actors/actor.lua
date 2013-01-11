@@ -10,10 +10,17 @@ function Actor:keydown(dt)
     local moved = false
     for key, m in pairs(self.inputs) do
       if love.keyboard.isDown(key) then
-        self.dt_since_input = 0
-        moved = true
-        movement.x = movement.x + m.x
-        movement.y = movement.y + m.y
+        if type(m) == 'function' then
+          if self.dt_since_input > 0.5 then
+            m(self)
+            self.dt_since_input = 0
+          end
+        else
+          self.dt_since_input = 0
+          moved = true
+          movement.x = movement.x + m.x
+          movement.y = movement.y + m.y
+        end
       end
     end
     if moved then
