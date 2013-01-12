@@ -24,7 +24,7 @@ function MapGenerator:randomize()
   self:newWave(3)
   self:newWave(5)
   self:newBeach(20, 7)
-  self.level.player = self:newActor(Player, 21, 1, 6/self.map.height) -- place on the beach
+  self.level.player = self:newActor(Player, 21, 1, 1, 0.8, 7/self.map.height) -- place on the beach
 end
 
 function MapGenerator:update(dt)
@@ -43,8 +43,8 @@ function MapGenerator:seedPosition(seed_x,seed_y, scale_x, scale_y, offset_x, of
   offset_x = offset_x or 0
   offset_y = offset_y or 0
   return {
-    x = math.floor(((SimplexNoise.Noise2D(seed_x*0.1, seed_x*0.1)) * 120) % math.floor(scale_x * self.map.width-1) + offset_x) + 1,
-    y = math.floor(((SimplexNoise.Noise2D(seed_y*0.1, seed_y*0.1)) * 120) % math.floor(scale_x * self.map.height-1) + offset_y) + 1
+    x = math.floor((((SimplexNoise.Noise2D(seed_x*0.1, seed_x*0.1)) * self.map.width) % math.floor(scale_x * self.map.width-1)) + offset_x) + 1,
+    y = math.floor((((SimplexNoise.Noise2D(seed_y*0.1, seed_y*0.1)) * self.map.height) % math.floor(scale_y * self.map.height-1)) + offset_y) + 1
   }
 end
 
@@ -53,11 +53,10 @@ end
 function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
   local actor = klass()
   local position = self:seedPosition(x1 or 1, y1 or 1,
-      x2 or self.map.width, y2 or self.map.height)
+      x2 or 1, y2 or 1)
   actor.position.x = position.x
   actor.position.y = position.y
   actor.position.z = z or 1
-  print(position.x, position.y)
   self.map:addEntity(actor)
   return actor
 end
