@@ -79,12 +79,19 @@ function Player:positionUpdated()
 end
 
 function Player:switchState()
+  print(self.map:surface(self.position))
   if self.state == 'standing' then
-    self.state = 'paddling'
+    if self.map:surface(self.position) == 'Water' then
+      self.state = 'paddling'
+    end
   elseif self.state == 'paddling' then
     self.state = 'surfing'
-  else
-    self.state = 'standing'
+  elseif self.state == 'surfing' then
+    if self.map:surface(self.position) == 'Water' then
+      self.state = 'paddling'
+    else
+      self.state = 'standing'
+    end
   end
 
   self:setBoard()
@@ -101,7 +108,16 @@ function Player:setBoard()
   elseif self.state == 'paddling' then
     self.board = {
       {x = 0, y = -1, c = '▌'},
+      {x = -1, y = 0, c = '/'},
+      {x = 1, y = 0, c = '\\'},
       {x = 0, y = 1, c = '▌'}
     }
+  elseif self.state == 'surfing' then
+    self.board = {
+      {x = 0, y = -1, c = '▌'},
+      {x = 0, y = 1, c = '▌'}
+    }
+  else
+    error(1, 'player state invalid')
   end
 end
