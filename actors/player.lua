@@ -58,6 +58,26 @@ function Player:setInputs(inputs)
   end
 end
 
+function Player:update(dt)
+  if self.state == 'standing' then
+    self.speed_factor = 25
+  elseif self.state == 'paddling' then
+    self.speed_factor = 10
+  else
+    self.speed_factor = 3
+  end
+  Actor.update(self, dt)
+end
+
+-- if standing (i.e on the beach, cut the speed so it becomes proper
+function Player:positionUpdated()
+  if self.state == 'standing' then
+    self.speed = self.speed / 2
+  elseif self.state == 'paddling' then
+    self.speed = self.speed/3*2
+  end
+end
+
 function Player:switchState()
   if self.state == 'standing' then
     self.state = 'paddling'
@@ -71,6 +91,7 @@ function Player:switchState()
 end
 
 function Player:setBoard()
+
   if self.state == 'standing' then
     self.board = {
       {x = 1, y = -1, c = '|'},

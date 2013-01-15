@@ -6,6 +6,7 @@ function Actor:initialize()
   self.orientation = math.pi/2
   self.speed = 0
   self.max_speed = 3
+  self.speed_factor = 10
 end
 
 
@@ -63,8 +64,8 @@ function Actor:update(dt)
   end
 
   local old_position = {x = self.position.x, y = self.position.y}
-  self.position.x = self.position.x + math.cos(self.orientation) * self.speed * dt
-  self.position.y = self.position.y + math.sin(self.orientation) * self.speed * dt
+  self.position.x = self.position.x + math.cos(self.orientation) * self.speed * dt * self.speed_factor
+  self.position.y = self.position.y + math.sin(self.orientation) * self.speed * dt * self.speed_factor
 
   self.map:fitIntoMap(self.position)
 
