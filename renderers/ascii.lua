@@ -21,6 +21,10 @@ function AsciiRenderer:print(text, color, x, y)
   love.graphics.setColor(unpack(color))
   love.graphics.print(text, self:scaledXY(x, y))
 end
+function AsciiRenderer:rotate(angle)
+  love.graphics.rotate(angle)
+end
+
 function AsciiRenderer:scaledXY(x, y)
   return self:scaledX(x), self:scaledY(y)
 end

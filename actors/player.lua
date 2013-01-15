@@ -3,19 +3,19 @@ Player = class("Player", Actor)
 Player.input_alternatives = {
   arrows = {
     keyboard = {
-      up = 'up',
-      down = 'down',
-      left = 'left',
-      right = 'right',
+      speedUp = 'up',
+      speedDown = 'down',
+      turnLeft = 'left',
+      turnRight = 'right',
       switchState = ' '
     }
   },
   wasd = {
     keyboard = {
-      up = 'w',
-      down = 's',
-      left = 'a',
-      right = 'd',
+      speedUp = 'w',
+      speedDown = 's',
+      turnLeft = 'a',
+      turnRight = 'd',
       switchState = ' '
     }
   }
@@ -23,11 +23,10 @@ Player.input_alternatives = {
 Player.movements = {
   up    = { x = 0, y = - 1 },
   down  = { x = 0, y =   1 },
-  left  = { x = - 1, y = 0 },
-  right = { x =   1, y = 0 },
 }
 
 function Player:initialize(position)
+  Actor.initialize(self)
   self.position = position or {x = 1, y = 1}
   self.direction = nil
   self.dt_since_input = 0
@@ -41,9 +40,11 @@ end
 
 function Player:draw()
   local board = {}
-  game.renderer:print('@', {255,0,0,255}, self.position.x, self.position.y)
+  game.renderer:translate(self.position.x, self.position.y)
+  game.renderer:rotate(self.orientation + math.pi / 2)
+  game.renderer:print('@', {255,0,0,255}, 0, 0)
   for i, tile in pairs(self.board) do
-    game.renderer:print(tile.c, {255,100,0,255}, self.position.x + tile.x, self.position.y - tile.y)
+    game.renderer:print(tile.c, {255,100,0,255}, tile.x, tile.y)
   end
 end
 

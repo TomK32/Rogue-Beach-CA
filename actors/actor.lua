@@ -1,60 +1,73 @@
 Actor = class("Actor")
 
-function Actor:move(direction)
-  self.direction = direction
+function Actor:initialize()
+  self.turns = {}
+  self.direction = 0
+  self.orientation = math.pi/2
+  self.speed = 0
+  self.max_speed = 3
 end
+
 
 function Actor:keydown(dt)
   if self.dt_since_input > 0.1 then
-    local movement = {x = 0, y = 0}
-    local moved = false
     for key, m in pairs(self.inputs) do
       if love.keyboard.isDown(key) then
         if type(m) == 'function' then
           if self.dt_since_input > 0.5 then
-            m(self)
+            m(self, key)
             self.dt_since_input = 0
           end
-        else
-          self.dt_since_input = 0
-          moved = true
-          movement.x = movement.x + m.x
-          movement.y = movement.y + m.y
         end
       end
     end
-    if moved then
-      self:move(movement)
-    end
   end
   self.dt_since_input = self.dt_since_input + dt
-  return moved
 end
+
+function Actor:speedUp()
+  self:speedChange(1)
+end
+function Actor:speedDown()
+  self:speedChange(-1)
+end
+
+function Actor:speedChange(val)
+  self.speed = self.speed + val
+  if self.speed > self.max_speed then
+    self.speed = self.max_speed
+  elseif self.speed < - self.max_speed / 2 then
+    self.speed = - self.max_speed / 2
+  end
+end
+
+function Actor:turnLeft()
+  self:turn(- math.pi / 4)
+end
+
+function Actor:turnRight()
+  self:turn(math.pi / 4)
+end
+
+function Actor:turn(direction)
+  if not self.turns then self.turns = {} end
+  table.insert(self.turns, direction)
+  self.orientation = (self.orientation + direction) % (2 * math.pi)
+end
+
 
 function Actor:update(dt)
-  if self.inputs then
-    if not self:keydown(dt) then
-    end
-  end
-  return self:updatePosition(dt)
-end
-
-function Actor:updatePosition(dt)
-  if not self.direction then
+  self:keydown(dt)
+  if self.speed == 0 then
     return false
   end
 
   local old_position = {x = self.position.x, y = self.position.y}
+  self.position.x = self.position.x + math.cos(self.orientation) * self.speed * dt
+  self.position.y = self.position.y + math.sin(self.orientation) * self.speed * dt
 
-  self.position.x = self.position.x + self.direction.x
-  self.position.y = self.position.y + self.direction.y
   self.map:fitIntoMap(self.position)
 
-  if self.inputs then
-    --self.game.views.map:centerAt(self.position)
-  end
-
-  self.direction = nil
   self:positionUpdated()
   return true
 end

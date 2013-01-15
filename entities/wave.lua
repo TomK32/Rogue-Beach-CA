@@ -6,6 +6,7 @@ function Wave:initialize(position, tiles)
   self.dt = 0
   self.speed = position.speed
   self.dead = false
+  self.direction = {x = 0, y = 1}
 end
 
 function Wave:draw()
