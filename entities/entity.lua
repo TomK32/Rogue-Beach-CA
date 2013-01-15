@@ -17,3 +17,12 @@ end
 function Entity:update(dt)
 end
 
+function Entity:includesPoint(point)
+  if self.position.x < point.x and self.position.y < point.y then
+    if self.position.x + self.position.width > point.x and
+       self.position.y + self.position.height > point.y then
+      return true
+    end
+  end
+  return false
+end

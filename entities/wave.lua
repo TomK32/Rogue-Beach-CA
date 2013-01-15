@@ -1,8 +1,7 @@
 
-Wave = class("Wave", Entity)
+Wave = class("Wave", Plane)
 function Wave:initialize(position, tiles)
-  self.position = position
-  self.tiles = tiles
+  Plane.initialize(self, position, tiles)
   self.dt = 0
   self.speed = position.speed
   self.dead = false

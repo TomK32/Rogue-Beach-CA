@@ -48,3 +48,22 @@ function Map:fitIntoMap(position)
   return position
 end
 
+function Map:belowPosition(position)
+  -- only search layers under the position.z
+  local result = {}
+  for i=1, position.z do
+    if self.layers[position.z - i + 1] then
+      for e, entity in ipairs(self.layers[position.z - i + 1]) do
+        if entity.includesPoint and entity:includesPoint(position) then
+          table.insert(result, entity)
+        end
+      end
+    end
+  end
+  return result
+end
+
+function Map:surface(position)
+  local entity = self:belowPosition(position)[1]
+  return entity._type or type(entity) or nil
+end

@@ -89,7 +89,7 @@ function MapGenerator:newSea()
       math.max(0, 200 - darkening * y + math.floor((SimplexNoise.Noise2D(x*0.001, y*0.1) + 1) * 50) % 50),
       255 } end
   )
-  return self.map:addEntity(Plane({x = 0, y = 0, z = 4}, tiles))
+  return self.map:addEntity(Plane({x = 0, y = 0, z = 4}, tiles, 'Water'))
 end
 
 function MapGenerator:newBeach(z, depth)
@@ -103,7 +103,7 @@ function MapGenerator:newBeach(z, depth)
          255 }
     end
   )
-  return self.map:addEntity(Plane({x = 1, y = 1, z = z}, tiles))
+  return self.map:addEntity(Plane({x = 1, y = 1, z = z}, tiles, 'Beach'))
 end
 
 function MapGenerator:fillTiles(x1, y1, x2, y2, callback)

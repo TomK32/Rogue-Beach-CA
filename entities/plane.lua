@@ -1,9 +1,12 @@
 
 
 Plane = class("Plane", Entity)
-function Plane:initialize(position, tiles)
+function Plane:initialize(position, tiles, _type)
+  self._type = _type
   self.position = position
   self.tiles = tiles
+  self.position.width = #self.tiles
+  self.position.height = #self.tiles[1]
 end
 
 function Plane:draw()
