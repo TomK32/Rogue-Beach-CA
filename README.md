@@ -4,6 +4,7 @@ Born from shear madness is this roguelike game about surfing. Yes, surfing.
 The gameplay is yet unclear but expect some action at Dungeon Reef
 (South Africa), some freaky Surf Rock and other un-roguelike-y things.
 
+  _it's some sort of surfing game I suppose?_ (legacy99)
 
 ## Srsly, roguelike and surfing?
 
