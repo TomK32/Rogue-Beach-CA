@@ -5,7 +5,8 @@ game = {
     mode = { height = love.graphics.getHeight(), width = love.graphics.getWidth() }
   },
   fonts = {},
-  renderer = require('renderers/ascii')
+  renderer = require('renderers/ascii'),
+  sounds = require('sounds')
 }
 
 function game:createFonts(offset)

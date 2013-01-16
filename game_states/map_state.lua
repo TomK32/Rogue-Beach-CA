@@ -18,6 +18,8 @@ function MapState:initialize()
   self.view = MapView(self.level.map)
   game.renderer.map_view = self.view
   self.view:update()
+
+  love.audio.play(game.sounds.waves[1])
 end
 
 function MapState:draw()

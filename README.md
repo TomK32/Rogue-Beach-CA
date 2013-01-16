@@ -59,6 +59,8 @@ Surfer carrying a board
 
 ## Credits
 
+* Sounds by
+  * Mike Koenig, CC-BY http://soundbible.com/1935-Ocean-Waves.html
 * LÖVE2d and the following libraries:
   * Quickie
 * ananasblau's own games Kollum and Cross Country Running
