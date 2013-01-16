@@ -16,14 +16,16 @@ end
 
 function MapView:updateDisplay()
   self.display = {
-    x = 10,
-    y = 10,
+    x = 0,
+    y = 0,
     width = math.min(self.map.width * self.scale.x, game.graphics.mode.width)  - 20,
     height = math.min(self.map.height * self.scale.y, game.graphics.mode.height) - 20
   }
 end
 
 function MapView:drawContent()
+  love.graphics.rotate(math.pi)
+  love.graphics.translate(-game.graphics.mode.width, -game.graphics.mode.height)
   if self.canvas then
     love.graphics.setColor(255,255,255,155)
     love.graphics.draw(self.canvas, 0, 0)
