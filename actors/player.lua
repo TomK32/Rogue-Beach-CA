@@ -42,9 +42,11 @@ function Player:draw()
   local board = {}
   game.renderer:translate(self.position.x, self.position.y)
   game.renderer:rotate(self.orientation + math.pi / 2)
-  game.renderer:print('@', {255,0,0,255}, 0, 0)
+  game.renderer:print('@', {0,0,0,255}, 0, 0)
+  game.renderer:print('@', {255,200,50,255}, 0.1, 0.1)
   for i, tile in pairs(self.board) do
-    game.renderer:print(tile.c, {255,100,0,255}, tile.x, tile.y)
+    game.renderer:print(tile.c, {0,0,0,255}, tile.x+0.1, tile.y+0.1)
+    game.renderer:print(tile.c, {255,200,50,255}, tile.x, tile.y)
   end
 end
 
