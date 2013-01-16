@@ -1,9 +1,10 @@
 
 Wave = class("Wave", Plane)
-function Wave:initialize(position, tiles)
+function Wave:initialize(position, tiles, beach_y)
   Plane.initialize(self, position, tiles, 'Wave')
   self.dt = 0
   self.speed = position.speed
+  self.beach_y = beach_y
   self.dead = false
   self.direction = {x = 0, y = 1}
   return self
@@ -25,5 +26,5 @@ end
 function Wave:update(dt)
   self.dead = false
   self.position.y = self.position.y - dt * self.speed
-  if self.position.y < 1 then self.dead = true end
+  if self.position.y < self.beach_y then self.dead = true end
 end

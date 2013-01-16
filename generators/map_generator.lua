@@ -23,7 +23,6 @@ function MapGenerator:randomize()
   self:newWave(1) -- waves are layer 10
   self:newWave(3)
   self:newWave(5)
-  self:newBeach(20, 7)
   self.level.player = self:newActor(Player, 21, 1, 1, 0.8, 7/self.map.height) -- place on the beach
 end
 
@@ -65,7 +64,9 @@ function MapGenerator:newWave(offset_y)
   wave_factor = 6
   x = math.abs(math.floor(SimplexNoise.Noise2D(offset_y, wave_factor) * self.map.width))
   y = 1
-  width = math.abs(math.floor(SimplexNoise.Noise2D(x, wave_factor) * self.map.width)) + 2*wave_factor
+  width = math.abs(math.floor(SimplexNoise.Noise2D(x, wave_factor) * self.map.width)) + 2 * wave_factor
+  speed = ((width * 101) % 5) + 8
+  beach_y = math.abs(14 - (speed + width) / wave_factor )-- point where the wave is being removed
   local tiles = self:fillTiles(1, 1, width, wave_factor,
     function(x,y)
       local w = math.floor(SimplexNoise.Noise2D(x*0.002, y*0.03)*200) % (60+offset_y)
@@ -76,7 +77,7 @@ function MapGenerator:newWave(offset_y)
       end
     end
   )
-  return self.map:addEntity(Wave({x = x, y = self.map.height - offset_y + wave_factor, z = 10, speed = ((width * 101) % 5) + 10 }, tiles))
+  return self.map:addEntity(Wave({x = x, y = self.map.height - offset_y + wave_factor, z = 10, speed = speed }, tiles, beach_y))
 end
 
 function MapGenerator:newSea()

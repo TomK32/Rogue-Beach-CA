@@ -8,7 +8,10 @@ function Level:initialize(level, seed)
   self.seed = self.seed + self.level
 
   self.generator = MapGenerator(self.seed)
-  self.map = Map(48,36, self.generator, self)
+  self.map = Map(
+    math.floor(game.graphics.mode.width / MapView.scale.x),
+    math.floor(game.graphics.mode.height / MapView.scale.y),
+    self.generator, self)
 
 end
 

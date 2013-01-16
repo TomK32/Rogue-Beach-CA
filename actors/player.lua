@@ -66,6 +66,14 @@ function Player:update(dt)
   else
     self.speed_factor = 3
   end
+  for i, wave in ipairs(self.map:waves(self.position)) do
+    if wave.direction.x ~= 0 then
+      self.position.x = self.position.x - wave.direction.x * dt * wave.speed / 8
+    end
+    if wave.direction.y ~= 0 then
+      self.position.y = self.position.y - wave.direction.y * dt * wave.speed / 8
+    end
+  end
   Actor.update(self, dt)
 end
 
@@ -80,11 +88,11 @@ end
 
 function Player:switchState()
   surface = self.map:surface(self.position)
-  if surface == 'Beach' and not self.state == 'standing' then
+  if surface == 'Beach' and self.state ~= 'standing' then
     self.state = 'standing'
   end
 
-  if surface == 'Water' or surface == 'Wave' then
+  if surface == 'Water' then
     if self.state == 'standing' then
       self.state = 'paddling'
     elseif self.state == 'paddling' then

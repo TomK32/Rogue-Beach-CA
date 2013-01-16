@@ -63,7 +63,19 @@ function Map:belowPosition(position)
   return result
 end
 
+function Map:waves(position)
+  local result = {}
+  for i, entity in ipairs(self:belowPosition(position)) do
+    if entity._type == 'Wave' then
+      table.insert(result, entity)
+    end
+  end
+  return result
+end
 function Map:surface(position)
-  local entity = self:belowPosition(position)[1]
-  return entity._type or type(entity) or nil
+  for i, entity in ipairs(self:belowPosition(position)) do
+     if entity._type ~= 'Wave' then
+      return entity._type or type(entity)
+    end
+  end
 end
