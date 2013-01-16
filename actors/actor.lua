@@ -69,7 +69,7 @@ function Actor:update(dt)
 
   self.map:fitIntoMap(self.position)
 
-  self:positionUpdated()
+  self:positionUpdated(dt)
   return true
 end
 

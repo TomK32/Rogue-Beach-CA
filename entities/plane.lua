@@ -2,7 +2,9 @@
 
 Plane = class("Plane", Entity)
 function Plane:initialize(position, tiles, _type)
-  self._type = _type
+  if _type then
+    self._type = _type
+  end
   self.position = position
   self.tiles = tiles
   self.position.width = #self.tiles

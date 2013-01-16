@@ -1,11 +1,12 @@
 
 Wave = class("Wave", Plane)
 function Wave:initialize(position, tiles)
-  Plane.initialize(self, position, tiles)
+  Plane.initialize(self, position, tiles, 'Wave')
   self.dt = 0
   self.speed = position.speed
   self.dead = false
   self.direction = {x = 0, y = 1}
+  return self
 end
 
 function Wave:draw()

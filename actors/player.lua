@@ -70,27 +70,27 @@ function Player:update(dt)
 end
 
 -- if standing (i.e on the beach, cut the speed so it becomes proper
-function Player:positionUpdated()
+function Player:positionUpdated(dt)
   if self.state == 'standing' then
-    self.speed = self.speed / 2
+    self.speed = self.speed * dt
   elseif self.state == 'paddling' then
     self.speed = self.speed/3*2
   end
 end
 
 function Player:switchState()
-  print(self.map:surface(self.position))
-  if self.state == 'standing' then
-    if self.map:surface(self.position) == 'Water' then
+  surface = self.map:surface(self.position)
+  if surface == 'Beach' and not self.state == 'standing' then
+    self.state = 'standing'
+  end
+
+  if surface == 'Water' or surface == 'Wave' then
+    if self.state == 'standing' then
       self.state = 'paddling'
-    end
-  elseif self.state == 'paddling' then
-    self.state = 'surfing'
-  elseif self.state == 'surfing' then
-    if self.map:surface(self.position) == 'Water' then
+    elseif self.state == 'paddling' then
+      self.state = 'surfing'
+    elseif self.state == 'surfing' then
       self.state = 'paddling'
-    else
-      self.state = 'standing'
     end
   end
 
