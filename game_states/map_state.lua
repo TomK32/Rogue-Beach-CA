@@ -19,6 +19,7 @@ function MapState:initialize()
   self.view:update()
 
   love.audio.play(game.sounds.waves[1])
+  game.sounds.waves[1]:setVolume(0.1)
 end
 
 function MapState:draw()
