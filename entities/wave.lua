@@ -15,7 +15,7 @@ function Wave:draw()
   game.renderer:translate(self.position.x, self.position.y)
   for x, row in pairs(self.tiles) do
     for y, c in pairs(row) do
-      game.renderer:rectangle('fill', {0, 0, 255-c, 105}, x-1, y-1)
+      game.renderer:rectangle('fill', {0, 255-c, 255-c, 105}, x-1, y-1)
       game.renderer:print('~', {2200, 200, 255-c, 255}, x-1, y-1)
     end
   end

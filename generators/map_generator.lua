@@ -84,11 +84,10 @@ function MapGenerator:newSea()
   -- tiles are all colour values
   local darkening = self.map.height / 10
   local tiles = self:fillTiles(1, 1, self.map.width, self.map.height,
-    function(x,y) return {
-      0,
-      0,
-      math.max(0, 200 - darkening * y + math.floor((SimplexNoise.Noise2D(x*0.001, y*0.1) + 1) * 50) % 50),
-      255 } end
+    function(x,y)
+      local factor = math.max(0, 200 - darkening * y + math.floor((SimplexNoise.Noise2D(x*0.001, y*0.1) + 1) * 50) % 50)
+      return { 0, factor - y, factor, 255 }
+    end
   )
   return self.map:addEntity(Plane({x = 0, y = 0, z = 4}, tiles, 'Water'))
 end
