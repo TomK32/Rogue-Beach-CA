@@ -6,7 +6,8 @@ game = {
   },
   fonts = {},
   renderer = require('renderers/ascii'),
-  sounds = require('sounds')
+  sounds = require('sounds'),
+  realtime = true
 }
 
 function game:createFonts(offset)

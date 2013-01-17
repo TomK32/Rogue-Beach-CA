@@ -7,16 +7,17 @@ function Actor:initialize()
   self.speed = 0
   self.max_speed = 3
   self.speed_factor = 10
+  self.dt_between_step = 0.01
 end
 
 
 function Actor:keydown(dt)
-  if self.dt_since_input > 0.1 then
+  if self.dt_since_input > self.dt_between_step then
     for key, m in pairs(self.inputs) do
       if love.keyboard.isDown(key) then
         if type(m) == 'function' then
           if self.dt_since_input > 0.5 then
-            m(self, key)
+            self.moved = self.moved or m(self, key)
             self.dt_since_input = 0
           end
         end
@@ -28,9 +29,12 @@ end
 
 function Actor:speedUp()
   self:speedChange(1)
+  return true
 end
+
 function Actor:speedDown()
   self:speedChange(-1)
+  return true
 end
 
 function Actor:speedChange(val)
@@ -44,10 +48,12 @@ end
 
 function Actor:turnLeft()
   self:turn(- math.pi / 4)
+  return true
 end
 
 function Actor:turnRight()
   self:turn(math.pi / 4)
+  return true
 end
 
 function Actor:turn(direction)
@@ -59,7 +65,7 @@ end
 
 function Actor:update(dt)
   self:keydown(dt)
-  if self.speed == 0 then
+  if not self.moved and self.speed == 0 then
     return false
   end
 

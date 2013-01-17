@@ -61,19 +61,20 @@ function Player:setInputs(inputs)
 end
 
 function Player:update(dt)
+  game.ticked = self.moved
   if self.state == 'standing' then
-    self.speed_factor = 25
+    self.speed_factor = 30
   elseif self.state == 'paddling' then
     self.speed_factor = 10
   else
-    self.speed_factor = 3
+    self.speed_factor = 1
   end
   for i, wave in ipairs(self.map:waves(self.position)) do
     if wave.direction.x ~= 0 then
-      self.position.x = self.position.x - wave.direction.x * dt * wave.speed / 8
+      self.position.x = self.position.x - wave.direction.x * dt * wave.speed / 4
     end
     if wave.direction.y ~= 0 then
-      self.position.y = self.position.y - wave.direction.y * dt * wave.speed / 8
+      self.position.y = self.position.y - wave.direction.y * dt * wave.speed / 4
     end
   end
   Actor.update(self, dt)
@@ -81,20 +82,19 @@ end
 
 -- if standing (i.e on the beach, cut the speed so it becomes proper
 function Player:positionUpdated(dt)
-  if self.state == 'standing' then
-    self.speed = self.speed * dt
-  elseif self.state == 'paddling' then
-    self.speed = self.speed/3*2
-  end
+  self.speed = math.max(0, self.speed - self.speed_factor * dt)
 end
 
 function Player:switchState()
+  local previousState = self.state
   surface = self.map:surface(self.position)
   if surface == 'Beach' and self.state ~= 'standing' then
     self.state = 'standing'
+    game.realtime = true
   end
 
   if surface == 'Water' then
+    game.realtime = false
     if self.state == 'standing' then
       self.state = 'paddling'
     elseif self.state == 'paddling' then
@@ -105,6 +105,7 @@ function Player:switchState()
   end
 
   self:setBoard()
+  return self.state ~= previousState
 end
 
 function Player:setBoard()

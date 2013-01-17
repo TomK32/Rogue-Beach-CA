@@ -13,7 +13,6 @@ require 'entities/wave'
 
 MapState = class("MapState", GameState)
 function MapState:initialize()
-  self.realtime = true
   self.level = Level(1, math.floor(math.random() * 10))
   self.view = MapView(self.level.map)
   game.renderer.map_view = self.view
@@ -29,8 +28,14 @@ function MapState:draw()
 end
 
 function MapState:update(dt)
-  if self.level.player:update(dt) or self.realtime then
+  if not game.realtime then
+    dt = dt * 4
+  end
+  self.level.player:update(dt)
+  if game.realtime or game.ticked then
     self.level:update(dt)
     self.view:update()
+    game.ticked = false
+    self.level.player.moved = false
   end
 end
