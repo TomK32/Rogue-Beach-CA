@@ -4,7 +4,7 @@ Born from shear madness is this roguelike game about surfing. Yes, surfing.
 The gameplay is yet unclear but expect some action at Dungeon Reef
 (South Africa), some freaky Surf Rock and other un-roguelike-y things.
 
-  _it's some sort of surfing game I suppose?_ (legacy99)
+    _it's some sort of surfing game I suppose?_ -- legacy99
 
 ## Srsly, roguelike and surfing?
 
@@ -20,6 +20,8 @@ parameter so if she goes UP at high speed, a single hit on the LEFT button
 will only turn her a little and she will still go UP for a few turns,
 dozens of grid blocks.
 
+    _I'm not sure you understand how roguelikes work..._ -- pekuja
+
 ## Gameplay
 
 The player start swith herr board on the beach, grab it, run for the water and
@@ -32,6 +34,8 @@ Players get scores for a good and long surf, a polished release will give
 score if some camera is waiting to get a shot of the surfers.
 Trade your score for some hot speedos, flashy bikinis, boards, magic
 mushrooms, or a tasty cheeseburger while you are at the beach.
+
+    _looks so neat! Very cool :)_ -- @LorenBendar
 
 ## Is this really roguelike?
 
