@@ -65,7 +65,7 @@ function MapGenerator:newWave(offset_y)
   x = math.abs(math.floor(SimplexNoise.Noise2D(offset_y, wave_factor) * self.map.width))
   y = 1
   width = math.abs(math.floor(SimplexNoise.Noise2D(x, wave_factor) * self.map.width)) + 2 * wave_factor
-  speed = ((width * 101) % 5) + 8
+  speed = ((width * 101) % 10)
   beach_y = math.abs(14 - (speed + width) / wave_factor )-- point where the wave is being removed
   local tiles = self:fillTiles(1, 1, width, wave_factor,
     function(x,y)
