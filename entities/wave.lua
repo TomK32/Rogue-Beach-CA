@@ -12,35 +12,53 @@ function Wave:initialize(position, tiles, beach_y)
 end
 
 function Wave:draw()
+  if not self.colors then return end
   love.graphics.push()
   game.renderer:translate(self.position.x, self.position.y)
-  local w = 0
-  local t = 205
-  for x, row in pairs(self.tiles) do
-    for y, c in pairs(row) do
-      w = 0
-      t = 205
-      offset_x, offset_y = 0, 0
+  for x, row in pairs(self.colors) do
+    for y, cell in pairs(row) do
       love.graphics.push()
-      if self.sprawl and self.position.y - (self.position.height - y) < self.beach_y then
-        w = 255
-        c = 0
-        -- TOOD: Seed this
-        t = 223 + math.floor(math.random() * 32)
-        offset_x = math.random() * 2
-        offset_y = offset_x + y
-        love.graphics.scale(1/y, 1/y)
+      game.renderer:translate(x, y)
+      if cell.offset_y ~= 0 then
+        love.graphics.scale(0.9, 0.9)
+        love.graphics.rotate(cell.offset_x, cell.offset_y)
       end
-      game.renderer:rectangle('fill', {w, 255-c,255-c, t}, x-1+offset_x, y-1+offset_y)
-      game.renderer:print('~', {200, 200, 255-c, t}, x-1+offset_x, y-1+offset_y)
+      game.renderer:rectangle('fill', {cell.w, 255-cell.c,255-cell.c, 255}, offset_x, cell.offset_y)
+      game.renderer:print('~', {200, 200, 255-cell.c, cell.t}, cell.offset_x, cell.offset_y)
       love.graphics.pop()
     end
   end
   love.graphics.pop()
 end
 
+function Wave:updateColors(dt)
+  local rand = SimplexNoise.Noise2D(dt, self.dt) * 100
+  local w = 0
+  local t = 205
+  local new_colors = {}
+  for x, row in pairs(self.tiles) do
+    new_colors[x] = {}
+    for y, c in pairs(row) do
+      w = 0
+      t = 205
+      offset_x, offset_y = 0, 0
+      if self.sprawl and self.position.y - (self.position.height - y) < self.beach_y then
+        w = 205 + (rand % 50)
+        c = math.floor(((SimplexNoise.Noise2D(rand + x, y) * 16) % 16) + 1)
+        t = 230 + c
+        offset_x = c / 12
+        offset_y = c / 11
+      end
+      new_colors[x][y] = {
+        w= w, c= c, t= t, offset_x= offset_x, offset_y= offset_y
+      }
+    end
+  end
+  self.colors = new_colors
+end
 
 function Wave:update(dt)
+  self.dt = self.dt + dt
   self.position.y = self.position.y - dt * self.speed
   if self.position.y < self.beach_y then
     self.dead = true
@@ -49,4 +67,5 @@ function Wave:update(dt)
     self.sprawl = true
     -- hitting the beach, change colour
   end
+  self:updateColors(dt)
 end
