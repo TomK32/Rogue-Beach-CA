@@ -21,18 +21,20 @@ function MapGenerator:randomize()
   self:newSea() -- layer 4
   self:newBeach(5, 10) -- layer 5
   self:newWave(1) -- waves are layer 10
-  self:newWave(3)
-  self:newWave(5)
+  self:newWave(self.map.height / 2)
   self.level.player = self:newActor(Player, 21, 1, 1, 0.8, 7/self.map.height) -- place on the beach
 end
 
 function MapGenerator:update(dt)
   self.dt.wave = self.dt.wave + dt
-  if self.dt.wave > 1 then
-    self:incrementSeed(1)
+  if self.dt.wave > 2 and self:waveCount() < math.max(4, self.map.height / 4) then
     self.dt.wave = 0
+    self:incrementSeed(1)
     self:newWave(1)
   end
+end
+function MapGenerator:waveCount()
+  return #self.map.layers[10]
 end
 
 -- int, int, 0..1, 0..1, int, int

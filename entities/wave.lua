@@ -20,14 +20,20 @@ function Wave:draw()
     for y, c in pairs(row) do
       w = 0
       t = 205
+      offset_x, offset_y = 0, 0
+      love.graphics.push()
       if self.sprawl and self.position.y - (self.position.height - y) < self.beach_y then
         w = 255
         c = 0
         -- TOOD: Seed this
         t = 223 + math.floor(math.random() * 32)
+        offset_x = math.random() * 2
+        offset_y = offset_x + y
+        love.graphics.scale(1/y, 1/y)
       end
-      game.renderer:rectangle('fill', {w, 255-c,255-c, t}, x-1, y-1)
-      game.renderer:print('~', {200, 200, 255-c, t}, x-1, y-1)
+      game.renderer:rectangle('fill', {w, 255-c,255-c, t}, x-1+offset_x, y-1+offset_y)
+      game.renderer:print('~', {200, 200, 255-c, t}, x-1+offset_x, y-1+offset_y)
+      love.graphics.pop()
     end
   end
   love.graphics.pop()
