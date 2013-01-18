@@ -63,16 +63,17 @@ function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
 end
 
 function MapGenerator:newWave(offset_y)
-  wave_factor = 6
+  local wave_factor = 6
+  local center = math.floor(wave_factor / 2)
   x = math.abs(math.floor(SimplexNoise.Noise2D(offset_y, wave_factor) * self.map.width))
-  y = 1
+  y = offset_y
   width = math.abs(math.floor(SimplexNoise.Noise2D(x, wave_factor) * self.map.width)) + 2 * wave_factor
   speed = ((width * 101) % 10)
-  beach_y = math.abs(14 - (speed + width) / wave_factor )-- point where the wave is being removed
+  beach_y = 4 + speed / 2 -- point where the wave is being removed
   local tiles = self:fillTiles(1, 1, width, wave_factor,
     function(x,y)
-      local w = math.floor(SimplexNoise.Noise2D(x*0.002, y*0.03)*200) % (60+offset_y)
-      if y == math.floor(wave_factor / 2) then
+      local w = math.floor(SimplexNoise.Noise2D(x*0.002, y*0.03)*200) % 60
+      if y == center then
         return w * 3
       else
         return w
