@@ -7,16 +7,30 @@ function Wave:initialize(position, tiles, beach_y)
   self.beach_y = beach_y
   self.dead = false
   self.direction = {x = 0, y = 1}
+  self.sprawl = false -- countdown for when waves hit the beach
   return self
 end
 
 function Wave:draw()
   love.graphics.push()
   game.renderer:translate(self.position.x, self.position.y)
+  local w = 0
+  local t = 205
   for x, row in pairs(self.tiles) do
     for y, c in pairs(row) do
-      game.renderer:rectangle('fill', {0, 255-c, 255-c, 105}, x-1, y-1)
-      game.renderer:print('~', {2200, 200, 255-c, 255}, x-1, y-1)
+      w = 0
+      t = 205
+      if self.sprawl and self.position.y - (self.position.height - y) < self.beach_y then
+        w = 255
+        c = 0
+        if math.random() > 0.5 then
+          t = 255
+        else
+          t = 200
+        end
+      end
+      game.renderer:rectangle('fill', {w, 255-c,255-c, t}, x-1, y-1)
+      game.renderer:print('~', {200, 200, 255-c, t}, x-1, y-1)
     end
   end
   love.graphics.pop()
@@ -24,7 +38,12 @@ end
 
 
 function Wave:update(dt)
-  self.dead = false
   self.position.y = self.position.y - dt * self.speed
-  if self.position.y < self.beach_y then self.dead = true end
+  if self.position.y < self.beach_y then
+    self.dead = true
+  elseif not self.sprawl and (self.position.y - self.position.height * 2) < self.beach_y then
+    print("Sprawl")
+    self.sprawl = true
+    -- hitting the beach, change colour
+  end
 end
