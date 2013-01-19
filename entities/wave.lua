@@ -23,7 +23,7 @@ function Wave:draw()
         love.graphics.scale(0.9, 0.9)
         love.graphics.rotate(cell.offset_x, cell.offset_y)
       end
-      game.renderer:rectangle('fill', {cell.w, 255-cell.c,255-cell.c, 255}, offset_x, cell.offset_y)
+      game.renderer:rectangle('fill', {cell.w, 255-cell.c,255-cell.c, 255}, cell.offset_x, cell.offset_y)
       game.renderer:print('~', {200, 200, 255-cell.c, cell.t}, cell.offset_x, cell.offset_y)
       love.graphics.pop()
     end
@@ -36,6 +36,8 @@ function Wave:updateColors(dt)
   local w = 0
   local t = 205
   local new_colors = {}
+  local offset_x = 0
+  local offset_y = 0
   for x, row in pairs(self.tiles) do
     new_colors[x] = {}
     for y, c in pairs(row) do
