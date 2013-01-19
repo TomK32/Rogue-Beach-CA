@@ -20,7 +20,7 @@ function Wave:draw()
       love.graphics.push()
       game.renderer:translate(x, y)
       if cell.offset_y ~= 0 then
-        love.graphics.scale(0.9, 0.9)
+        love.graphics.scale(cell.offset_x, cell.offset_x)
         love.graphics.rotate(cell.offset_x, cell.offset_y)
       end
       game.renderer:rectangle('fill', {cell.w, 255-cell.c,255-cell.c, 255}, cell.offset_x, cell.offset_y)
@@ -48,8 +48,8 @@ function Wave:updateColors(dt)
         w = 205 + (rand % 50)
         c = math.floor(((SimplexNoise.Noise2D(rand + x, y) * 16) % 16) + 1)
         t = 230 + c
-        offset_x = c / 12
-        offset_y = c / 11
+        offset_x = - c / 12
+        offset_y = - c / 11
       end
       new_colors[x][y] = {
         w= w, c= c, t= t, offset_x= offset_x, offset_y= offset_y
