@@ -4,7 +4,7 @@ Born from shear madness is this roguelike game about surfing. Yes, surfing.
 The gameplay is yet unclear but expect some action at Dungeon Reef
 (South Africa), some freaky Surf Rock and other un-roguelike-y things.
 
-    _it's some sort of surfing game I suppose?_ -- legacy99
+  _it's some sort of surfing game I suppose?_ -- legacy99
 
 ## Srsly, roguelike and surfing?
 
@@ -20,7 +20,15 @@ parameter so if she goes UP at high speed, a single hit on the LEFT button
 will only turn her a little and she will still go UP for a few turns,
 dozens of grid blocks.
 
-    _I'm not sure you understand how roguelikes work..._ -- pekuja
+Roguelikes are a lot about slaying monsters, creatures wouldn't be
+expected on a beach. But, beaches offer alternatives: Sharks for
+example, but they would be very much to fight, with the surfer just
+being part the shark's foodchain. Rocks, though very passive can be a
+hazard to anyone falling of their board. Lastely other surfers and even
+though this is a sad matter, violence between groups of surfers in order
+to claim their stakes on certain beaches or even waves, is not unseen.
+
+  _I'm not sure you understand how roguelikes work..._ -- pekuja
 
 ## Gameplay
 
@@ -35,7 +43,7 @@ score if some camera is waiting to get a shot of the surfers.
 Trade your score for some hot speedos, flashy bikinis, boards, magic
 mushrooms, or a tasty cheeseburger while you are at the beach.
 
-    _looks so neat! Very cool :)_ -- @LorenBendar
+  _looks so neat! Very cool :)_ -- @LorenBendar
 
 ## Is this really roguelike?
 
@@ -73,7 +81,9 @@ Surfer carrying a board
 
 OneGameAMonth is about working together, that's why we share all this
 sourcecode onto github, that's why you could contribute a few pieces to
-this game. Art, music, code, mods, everything is possible.
+this game. Art, music, code, mods, everything is possible, fork the code
+right away or mail me. If you want to use my code oot make your own
+game, be my guest.
 
 ## Features / TODO
 
