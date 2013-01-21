@@ -8,6 +8,7 @@ function Wave:initialize(position, tiles, beach_y)
   self.dead = false
   self.direction = {x = 0, y = 1}
   self.sprawl = false -- countdown for when waves hit the beach
+  self:updateColors(0.1)
   return self
 end
 
@@ -69,5 +70,7 @@ function Wave:update(dt)
     self.sprawl = true
     -- hitting the beach, change colour
   end
-  self:updateColors(dt)
+  if self.sprawl then
+    self:updateColors(dt)
+  end
 end

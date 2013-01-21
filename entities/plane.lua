@@ -25,6 +25,6 @@ function Plane:drawTile(x, y, tile)
   game.renderer:rectangle('fill', tile, x-1, y-1)
 end
 
-function Plane:update()
+function Plane:update(dt)
 end
 
