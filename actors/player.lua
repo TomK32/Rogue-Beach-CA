@@ -7,7 +7,8 @@ Player.input_alternatives = {
       speedDown = 'down',
       turnLeft = 'left',
       turnRight = 'right',
-      switchState = ' '
+      switchState = ' ',
+      tick = 'z'
     }
   },
   wasd = {
@@ -16,7 +17,8 @@ Player.input_alternatives = {
       speedDown = 's',
       turnLeft = 'a',
       turnRight = 'd',
-      switchState = ' '
+      switchState = ' ',
+      tick = 'z'
     }
   }
 }

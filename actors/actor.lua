@@ -27,6 +27,10 @@ function Actor:keydown(dt)
   self.dt_since_input = self.dt_since_input + dt
 end
 
+function Actor:tick()
+  return true
+end
+
 function Actor:speedUp()
   self:speedChange(1)
   return true
