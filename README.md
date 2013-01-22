@@ -72,7 +72,11 @@ Surfer carrying a board
 ## Credits
 
 * Sounds by
-  * Mike Koenig, CC-BY http://soundbible.com/1935-Ocean-Waves.html
+  * Mike Koenig, CC-By http://soundbible.com/1935-Ocean-Waves.html
+* Music by
+  * Jano Gonzáles - Kurt Gödel, CC-By-SA http://soundcloud.com/janogonzalez/kurt-godel
+  * Jano Gonzáles - Cobquecura, CC-By-SA http://soundcloud.com/janogonzalez/cobquecura
+  * Jano Gonzáles - Jugo Blues, CC-By-SA http://soundcloud.com/janogonzalez/jugo-blues
 * LÖVE2d and the following libraries:
   * Quickie
 * ananasblau's own games Kollum and Cross Country Running
