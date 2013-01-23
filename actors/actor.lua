@@ -51,12 +51,12 @@ function Actor:speedChange(val)
 end
 
 function Actor:turnLeft()
-  self:turn(- math.pi / 4)
+  self:turn(- math.pi / 8)
   return true
 end
 
 function Actor:turnRight()
-  self:turn(math.pi / 4)
+  self:turn(math.pi / 8)
   return true
 end
 
@@ -64,6 +64,7 @@ function Actor:turn(direction)
   if not self.turns then self.turns = {} end
   table.insert(self.turns, direction)
   self.orientation = (self.orientation + direction) % (2 * math.pi)
+  self.speed = 0.1
 end
 
 

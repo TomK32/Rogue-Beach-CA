@@ -68,15 +68,21 @@ function Player:update(dt)
     self.speed_factor = 30
   elseif self.state == 'paddling' then
     self.speed_factor = 10
-  else
+    if self.speed <= 0 then
+      self.speed_factor = 1
+    end
+  else -- surfing
     self.speed_factor = 1
   end
   for i, wave in ipairs(self.map:waves(self.position)) do
+    if self.state == 'paddling' then
+      self.speed = math.max(0, self.speed - dt)
+    end
     if wave.direction.x ~= 0 then
-      self.position.x = self.position.x - wave.direction.x * dt * wave.speed / 4
+      self.position.x = self.position.x - (wave.direction.x * dt * wave.speed) /  self.speed_factor
     end
     if wave.direction.y ~= 0 then
-      self.position.y = self.position.y - wave.direction.y * dt * wave.speed / 4
+      self.position.y = self.position.y - (self.position.y - wave.position.y + wave.position.height) / 2 * dt * dt * math.sqrt(wave.speed / self.speed_factor)
     end
   end
   Actor.update(self, dt)
