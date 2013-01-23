@@ -30,7 +30,7 @@ end
 
 function MapState:update(dt)
   if not game.realtime then
-    dt = dt * 4
+    dt = 0.05
   end
   self.level.player:update(dt)
   if game.realtime or game.ticked then
