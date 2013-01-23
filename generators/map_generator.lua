@@ -85,10 +85,14 @@ end
 
 function MapGenerator:newSea()
   -- tiles are all colour values
-  local darkening = self.map.height / 10
+  local darkening = self.map.height / 8
   local tiles = self:fillTiles(1, 1, self.map.width, self.map.height,
     function(x,y)
-      local factor = math.max(0, 200 - darkening * y + math.floor((SimplexNoise.Noise2D(x*0.001, y*0.1) + 1) * 50) % 50)
+      local factor = math.min(255, math.max(y, (255 - darkening * y) +
+          math.floor((SimplexNoise.Noise2D(x*50000, y*50000) + 1) * 16) % 16) +
+          math.floor((SimplexNoise.Noise2D(x*0.001, y * 0.1) + 1) * 16) % 16
+          )
+
       return { 0, factor - y, factor, 255 }
     end
   )
@@ -98,7 +102,7 @@ end
 function MapGenerator:newBeach(z, depth)
   local tiles = self:fillTiles(1, 1, self.map.width, depth,
     function(x,y)
-      local color_offset = math.floor((self.map.height/4-y)*10)
+      local color_offset = math.floor((self.map.height/4-y)*5)
       return
         {240 - color_offset,
          200 - color_offset,
