@@ -9,6 +9,8 @@ function MapGenerator:initialize(seed)
   self.seed = seed
   self:incrementSeed(0)
   self.dt = { wave = 0 }
+  -- make waves go sideways
+  self.direction = {y = 1, x = SimplexNoise.Noise2D(self.seed, 1) / 4 }
 end
 
 function MapGenerator:incrementSeed(dt)
@@ -80,7 +82,7 @@ function MapGenerator:newWave(offset_y)
       end
     end
   )
-  return self.map:addEntity(Wave({x = x, y = self.map.height - offset_y + wave_factor, z = 10, speed = speed }, tiles, beach_y))
+  return self.map:addEntity(Wave({x = x, y = self.map.height - offset_y + wave_factor, z = 10, speed = speed}, self.direction, tiles, beach_y))
 end
 
 function MapGenerator:newSea()
