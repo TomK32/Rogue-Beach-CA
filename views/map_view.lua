@@ -1,3 +1,4 @@
+require('views/score_view')
 
 MapView = class("MapView", View)
 MapView:include({

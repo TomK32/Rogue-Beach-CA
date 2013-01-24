@@ -38,6 +38,9 @@ function Player:initialize(position)
   self:setBoard()
   self:setInputs(Player.input_alternatives['wasd'])
   self:setInputs(Player.input_alternatives['arrows'])
+
+  self.current_wave = 0
+  self.score = 0
 end
 
 function Player:draw()
@@ -77,11 +80,16 @@ function Player:update(dt)
       self.speed_factor = 1
     end
   else -- surfing
-    self.speed_factor = 1
+    self.speed_factor = 5
   end
+  local had_wave = false
   for i, wave in ipairs(self.map:waves(self.position)) do
+    had_wave = true
     if self.state == 'paddling' then
       self.speed = math.max(0, self.speed - dt)
+    elseif self.state == 'surfing' and self.moved then
+      self.current_wave = self.current_wave + dt * 100
+      self.score = self.score + self.current_wave
     end
     if wave.direction.x ~= 0 then
       self.position.x = self.position.x - (wave.direction.x * dt * wave.speed) /  self.speed_factor
@@ -89,6 +97,9 @@ function Player:update(dt)
     if wave.direction.y ~= 0 then
       self.position.y = self.position.y - (self.position.y - wave.position.y + wave.position.height) / 2 * dt * dt * math.sqrt(wave.speed / self.speed_factor)
     end
+  end
+  if not had_wave then
+    self.current_wave = 0
   end
   Actor.update(self, dt)
 end

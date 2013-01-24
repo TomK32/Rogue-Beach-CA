@@ -29,7 +29,7 @@ end
 
 function MapGenerator:update(dt)
   self.dt.wave = self.dt.wave + dt
-  if self.dt.wave > 2 and self:waveCount() < math.max(4, self.map.height / 4) then
+  if self.dt.wave > 2 and self:waveCount() < math.max(8, self.map.height / 4) then
     self.dt.wave = 0
     self:incrementSeed(1)
     self:newWave(1)
