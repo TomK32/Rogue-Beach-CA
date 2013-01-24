@@ -64,6 +64,11 @@ end
 
 function Player:update(dt)
   game.ticked = self.moved
+  local surface = self.map:surface(self.position)
+  if (surface == 'Water' and self.state == 'standing') or (surface == 'Beach' and self.state ~= 'standing') then
+    self:switchState()
+    self:setBoard()
+  end
   if self.state == 'standing' then
     self.speed_factor = 30
   elseif self.state == 'paddling' then
