@@ -92,13 +92,16 @@ game, be my guest.
 ## Features / TODO
 
 * [DONE] Seeded map generator with beach, sea and waves
-* Player moving around
-  * When in water, change from a timer to a round based system
-  * Player laying on surfboard while paddling out to the waves
-  * Player standing up and surfing
+* [DONE] Player moving around
+  * [DONE] When in water, change from a timer to a round based system
+  * [DONE] Player laying on surfboard while paddling out to the waves
+  * [DONE] Player standing up and surfing
 * Waves building up and collapsing
-* Sound for waves, as audio sources with the Player as listener
-* Score awesomeness for certain tricks, time on the wave, etc.
+* [DONE] Sound for waves, as audio sources with the Player as listener
+  * [DONE] Surf music
+* Score
+  * awesomeness for certain tricks
+  * [DONE] time on the wave
 * Beach huts to trade Awesomeness into some gimmick
 * Customize Player
   * Surf-board
