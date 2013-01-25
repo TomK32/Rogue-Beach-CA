@@ -12,13 +12,12 @@ function Plane:initialize(position, tiles, _type)
 end
 
 function Plane:draw()
-  love.graphics.push()
+  game.renderer:translate(self.position.x, self.position.y)
   for x, row in pairs(self.tiles) do
     for y, tile in pairs(row) do
       self:drawTile(x, y, tile)
     end
   end
-  love.graphics.pop()
 end
 
 function Plane:drawTile(x, y, tile)

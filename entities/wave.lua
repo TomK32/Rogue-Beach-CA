@@ -14,7 +14,6 @@ end
 
 function Wave:draw()
   if not self.colors then return end
-  love.graphics.push()
   game.renderer:translate(self.position.x, self.position.y)
   for x, row in pairs(self.colors) do
     for y, cell in pairs(row) do
@@ -29,7 +28,6 @@ function Wave:draw()
       love.graphics.pop()
     end
   end
-  love.graphics.pop()
 end
 
 function Wave:updateColors(dt)
@@ -67,7 +65,6 @@ function Wave:update(dt)
   if self.position.y < self.beach_y then
     self.dead = true
   elseif not self.sprawl and (self.position.y - self.position.height * 2) < self.beach_y then
-    print("Sprawl")
     self.sprawl = true
     -- hitting the beach, change colour
   end
