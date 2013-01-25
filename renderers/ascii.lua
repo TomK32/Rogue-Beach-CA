@@ -32,7 +32,7 @@ function AsciiRenderer:scaledX(x)
   return x * self.map_view.scale.x
 end
 function AsciiRenderer:scaledY(y)
-  return y * self.map_view.scale.y
+  return - y * self.map_view.scale.y
 end
 return AsciiRenderer
 

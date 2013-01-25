@@ -22,11 +22,13 @@ function MapView:updateDisplay()
     width = math.min(self.map.width * self.scale.x, game.graphics.mode.width)  - 20,
     height = math.min(self.map.height * self.scale.y, game.graphics.mode.height) - 20
   }
+  self.display.tiles = {
+    x = math.floor(self.display.width / self.scale.x),
+    y = math.floor(self.display.height / self.scale.y)
+  }
 end
 
 function MapView:drawContent()
-  love.graphics.rotate(math.pi)
-  love.graphics.translate(-game.graphics.mode.width, -game.graphics.mode.height)
   if self.canvas then
     love.graphics.setColor(255,255,255,155)
     love.graphics.draw(self.canvas, 0, 0)
@@ -37,6 +39,7 @@ function MapView:update()
   love.graphics.setCanvas(self.canvas)
   love.graphics.setColor(55,55,55,255)
   love.graphics.rectangle('fill', 0,0,game.graphics.mode.width, game.graphics.mode.height)
+  love.graphics.translate(0, self.display.height)
   for i, layer in ipairs(self.map.layer_indexes) do
     entities = self.map.layers[layer]
     for i,entity in ipairs(entities) do

@@ -112,7 +112,7 @@ function MapGenerator:newBeach(z, depth)
          255 }
     end
   )
-  return self.map:addEntity(Plane({x = 1, y = 1, z = z}, tiles, 'Beach'))
+  return self.map:addEntity(Plane({x = 0, y = 0, z = z}, tiles, 'Beach'))
 end
 
 function MapGenerator:fillTiles(x1, y1, x2, y2, callback)

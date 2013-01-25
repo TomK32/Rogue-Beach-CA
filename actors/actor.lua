@@ -75,7 +75,7 @@ function Actor:update(dt)
   end
 
   local old_position = {x = self.position.x, y = self.position.y}
-  self.position.x = self.position.x + math.cos(self.orientation) * self.speed * dt * self.speed_factor
+  self.position.x = self.position.x - math.cos(self.orientation) * self.speed * dt * self.speed_factor
   self.position.y = self.position.y + math.sin(self.orientation) * self.speed * dt * self.speed_factor
 
   self.map:fitIntoMap(self.position)

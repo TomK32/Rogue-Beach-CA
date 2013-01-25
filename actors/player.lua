@@ -143,8 +143,8 @@ function Player:setBoard()
   elseif self.state == 'paddling' then
     self.board = {
       {x = 0, y = -1, c = '▌'},
-      {x = -1, y = 0, c = '/'},
-      {x = 1, y = 0, c = '\\'},
+      {x = -1, y = 0, c = '\\'},
+      {x = 1, y = 0, c = '/'},
       {x = 0, y = 1, c = '▌'}
     }
   elseif self.state == 'surfing' then
