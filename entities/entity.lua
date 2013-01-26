@@ -9,6 +9,12 @@ function Entity:initialize(options)
   if not self.position then
     self.position = {x = 1, y = 1, z = 1}
   end
+  if not self.position.width then
+    self.position.width = 1
+  end
+  if not self.position.height then
+    self.position.height = 1
+  end
 end
 
 function Entity:draw()
