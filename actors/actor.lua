@@ -31,6 +31,9 @@ function Actor:tick()
   return true
 end
 
+function Actor:maxSpeed()
+  return self.max_speed
+end
 function Actor:speedUp()
   self:speedChange(1)
   return true
@@ -41,12 +44,18 @@ function Actor:speedDown()
   return true
 end
 
-function Actor:speedChange(val)
+function Actor:speedChange(val, min, max)
   self.speed = self.speed + val
-  if self.speed > self.max_speed then
-    self.speed = self.max_speed
-  elseif self.speed < - self.max_speed / 2 then
-    self.speed = - self.max_speed / 2
+  if self.speed > self:maxSpeed() then
+    self.speed = self:maxSpeed()
+  elseif self.speed < - self:maxSpeed() / 2 then
+    self.speed = - self:maxSpeed() / 2
+  end
+  if min and self.speed < min then
+    self.speed = min
+  end
+  if max and self.speed > max then
+    self.max = max
   end
 end
 
@@ -64,13 +73,12 @@ function Actor:turn(direction)
   if not self.turns then self.turns = {} end
   table.insert(self.turns, direction)
   self.orientation = (self.orientation + direction) % (2 * math.pi)
-  self.speed = 0.1
 end
 
 
 function Actor:update(dt)
   self:keydown(dt)
-  if not self.moved and self.speed == 0 then
+  if not self.moved then
     return false
   end
 

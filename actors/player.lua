@@ -41,6 +41,17 @@ function Player:initialize(position)
 
   self.current_wave = 0
   self.score = 0
+
+  self.max_speed = {
+    standing = 4,
+    paddling = 1,
+    surfing = 8
+  }
+  self.drag = { -- how much the player is slowed down, 1 is a full halt
+    standing = 1,
+    paddling = 0.5,
+    surfing = 0.2
+  }
 end
 
 function Player:draw()
@@ -65,48 +76,47 @@ function Player:setInputs(inputs)
   end
 end
 
+function Player:maxSpeed()
+  return self.max_speed[self.state]
+end
+
 function Player:update(dt)
-  game.ticked = self.moved
   local surface = self.map:surface(self.position)
   if (surface == 'Water' and self.state == 'standing') or (surface == 'Beach' and self.state ~= 'standing') then
     self:switchState()
     self:setBoard()
   end
-  if self.state == 'standing' then
-    self.speed_factor = 30
-  elseif self.state == 'paddling' then
-    self.speed_factor = 10
-    if self.speed <= 0 then
-      self.speed_factor = 1
-    end
-  else -- surfing
-    self.speed_factor = 5
+
+  game.ticked = self.moved
+  if not Actor.update(self, dt) then
+    return false
   end
+  print(self.speed, self.position.x, self.position.y)
+  self:speedChange(self.speed * - self.drag[self.state], 0, self:maxSpeed(self.state))
+
   local had_wave = false
   for i, wave in ipairs(self.map:waves(self.position)) do
     had_wave = true
     if self.state == 'paddling' then
-      self.speed = math.max(0, self.speed - dt)
+      --self:speedChange(- (wave.speed * dt) / 16, self.speed / 2, wave.speed)
     elseif self.state == 'surfing' and self.moved then
       self.current_wave = self.current_wave + dt * 100
       self.score = self.score + self.current_wave
+      self:speedChange(wave.speed / 2, self.speed, wave.speed)
     end
     if wave.direction.x ~= 0 then
-      self.position.x = self.position.x - (wave.direction.x * dt * wave.speed) /  self.speed_factor
+      self.position.x = self.position.x - (wave.direction.x * dt * math.sqrt(wave.speed * self.speed) * (1 - self.drag[self.state]))
     end
     if wave.direction.y ~= 0 then
-      self.position.y = self.position.y - (self.position.y - wave.position.y + wave.position.height) / 2 * dt * dt * math.sqrt(wave.speed / self.speed_factor)
+      self.position.y = self.position.y - (wave.direction.y * dt * math.sqrt(wave.speed * self.speed) * (1 - self.drag[self.state]))
     end
   end
   if not had_wave then
     self.current_wave = 0
   end
-  Actor.update(self, dt)
 end
 
--- if standing (i.e on the beach, cut the speed so it becomes proper
 function Player:positionUpdated(dt)
-  self.speed = math.max(0, self.speed - self.speed_factor * dt)
 end
 
 function Player:switchState()
