@@ -14,7 +14,7 @@ function game:createFonts(offset)
   self.fonts = {
     lineHeight = (10 + offset) * 1.7,
     small = love.graphics.newFont(10 + offset),
-    regular = love.graphics.newFont(14 + offset),
+    regular = love.graphics.newImageFont('images/font.png',   " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\""),
     large = love.graphics.newFont(24 + offset),
     very_large = love.graphics.newFont(48 + offset)
   }
