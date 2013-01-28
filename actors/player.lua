@@ -54,8 +54,8 @@ function Player:initialize(position)
   }
   self.drag = { -- how much the player is slowed down, 1 is a full halt
     standing = 1,
-    paddling = 0.5,
-    surfing = 0.2
+    paddling = 0.2,
+    surfing = 0.1
   }
 end
 
@@ -113,17 +113,17 @@ function Player:update(dt)
     elseif self.state == 'surfing' and self.moved then
       self.current_wave = self.current_wave + dt * 100
       self.score = self.score + self.current_wave
-      self:speedChange(wave.speed / 2, self.speed, wave.speed)
+      --self:speedChange(wave.speed / 2, self.speed, wave.speed)
     end
-    if wave.direction.x ~= 0 then
-      self.position.x = self.position.x - (wave.direction.x * dt * math.sqrt(wave.speed * self.speed) * (1 - self.drag[self.state]))
-    end
-    if wave.direction.y ~= 0 then
-      self.position.y = self.position.y - (wave.direction.y * dt * math.sqrt(wave.speed * self.speed) * (1 - self.drag[self.state]))
-    end
+    self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/2 * (1 - self.drag[self.state]))
+    self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/2 * (1 - self.drag[self.state]))
   end
   if not had_wave then
     self.current_wave = 0
+    if self.state == 'surfing' then
+      self.state = 'paddling'
+      self:setBoard()
+    end
   end
 end
 
