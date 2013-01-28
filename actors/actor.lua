@@ -66,12 +66,12 @@ function Actor:speedChange(val, min, max)
 end
 
 function Actor:turnLeft()
-  self:turn(- math.pi / 8)
+  self:turn(math.pi / 8)
   return true
 end
 
 function Actor:turnRight()
-  self:turn(math.pi / 8)
+  self:turn(- math.pi / 8)
   return true
 end
 
@@ -90,7 +90,7 @@ function Actor:update(dt)
 
   local old_position = {x = self.position.x, y = self.position.y}
   self.position.x = self.position.x - math.cos(self.orientation) * self.speed * dt * self.speed_factor
-  self.position.y = self.position.y + math.sin(self.orientation) * self.speed * dt * self.speed_factor
+  self.position.y = self.position.y - math.sin(self.orientation) * self.speed * dt * self.speed_factor
 
   self.map:fitIntoMap(self.position)
 

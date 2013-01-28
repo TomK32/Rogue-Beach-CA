@@ -58,6 +58,7 @@ function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
   actor.position.x = self.map.width / 2
   actor.position.y = 2
   actor.position.z = z or 1
+  actor.orientation = math.pi * 1.5
   self.map:addEntity(actor)
   return actor
 end

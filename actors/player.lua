@@ -113,10 +113,11 @@ function Player:update(dt)
     elseif self.state == 'surfing' and self.moved then
       self.current_wave = self.current_wave + dt * 100
       self.score = self.score + self.current_wave
-      --self:speedChange(wave.speed / 2, self.speed, wave.speed)
+      self:speedChange(math.sqrt(self.speed + wave.speed)/4, self.speed, wave.speed)
+      self.orientation = (self.orientation + wave.orientation) / 2
     end
-    self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/2 * (1 - self.drag[self.state]))
-    self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/2 * (1 - self.drag[self.state]))
+    self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
+    self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
   end
   if not had_wave then
     self.current_wave = 0
@@ -164,8 +165,8 @@ function Player:setBoard()
   elseif self.state == 'paddling' then
     self.board = {
       {x = 0, y = -1, c = '▌'},
-      {x = -1, y = 0, c = '\\'},
-      {x = 1, y = 0, c = '/'},
+      {x = -1, y = 0, c = '/'},
+      {x = 1, y = 0, c = '\\'},
       {x = 0, y = 1, c = '▌'}
     }
   elseif self.state == 'surfing' then
