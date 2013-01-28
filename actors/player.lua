@@ -42,6 +42,11 @@ function Player:initialize(position)
   self.current_wave = 0
   self.score = 0
 
+  self.accelleration = {
+    standing = 1.5,
+    paddling = 0.5,
+    surfing = 0
+  }
   self.max_speed = {
     standing = 4,
     paddling = 1,
@@ -80,6 +85,13 @@ function Player:maxSpeed()
   return self.max_speed[self.state]
 end
 
+function Actor:accellerationUp()
+  return self.accelleration[self.state]
+end
+function Actor:accellerationDown()
+  return - self.accelleration[self.state] / 2
+end
+
 function Player:update(dt)
   local surface = self.map:surface(self.position)
   if (surface == 'Water' and self.state == 'standing') or (surface == 'Beach' and self.state ~= 'standing') then
@@ -91,7 +103,6 @@ function Player:update(dt)
   if not Actor.update(self, dt) then
     return false
   end
-  print(self.speed, self.position.x, self.position.y)
   self:speedChange(self.speed * - self.drag[self.state], 0, self:maxSpeed(self.state))
 
   local had_wave = false
