@@ -1,12 +1,12 @@
 
 Wave = class("Wave", Plane)
-function Wave:initialize(position, direction, tiles, beach_y)
+function Wave:initialize(position, orientation, tiles, beach_y)
   Plane.initialize(self, position, tiles, 'Wave')
   self.dt = 0
   self.speed = position.speed
   self.beach_y = beach_y
   self.dead = false
-  self.direction = direction
+  self.orientation = orientation
   self.sprawl = false -- countdown for when waves hit the beach
   self:updateColors(0.1)
   return self
@@ -60,8 +60,9 @@ end
 
 function Wave:update(dt)
   self.dt = self.dt + dt
-  self.position.y = self.position.y - self.direction.y * dt * self.speed
-  self.position.x = self.position.x - self.direction.x * dt * self.speed
+  self.position.x = self.position.x - math.cos(self.orientation) * self.speed * dt
+  self.position.y = self.position.y - math.sin(self.orientation) * self.speed * dt
+
   if self.position.y < self.beach_y then
     self.dead = true
   elseif not self.sprawl and (self.position.y - self.position.height * 2) < self.beach_y then

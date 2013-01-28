@@ -10,7 +10,7 @@ function MapGenerator:initialize(seed)
   self:incrementSeed(0)
   self.dt = { wave = 0 }
   -- make waves go sideways
-  self.direction = {y = 1, x = SimplexNoise.Noise2D(self.seed, 1) / 4 }
+  self.orientation = ( SimplexNoise.Noise2D(self.seed, 1) / 5 + math.pi / 2 * 3) % math.pi
 end
 
 function MapGenerator:incrementSeed(dt)
@@ -24,7 +24,7 @@ function MapGenerator:randomize()
   self:newBeach(5, 10) -- layer 5
   self:newWave(1) -- waves are layer 10
   self:newWave(self.map.height / 2)
-  self.level.player = self:newActor(Player, 21, 1, 1, 0.8, 7/self.map.height) -- place on the beach
+  self.level.player = self:newActor(Player, 21) -- place on the beach
 end
 
 function MapGenerator:update(dt)
@@ -55,10 +55,8 @@ end
 -- x1, y1, x2, y2 to limit the area where to spawn
 function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
   local actor = klass()
-  local position = self:seedPosition(x1 or 1, y1 or 1,
-      x2 or 1, y2 or 1)
-  actor.position.x = position.x
-  actor.position.y = position.y
+  actor.position.x = self.map.width / 2
+  actor.position.y = 2
   actor.position.z = z or 1
   self.map:addEntity(actor)
   return actor
@@ -82,7 +80,7 @@ function MapGenerator:newWave(offset_y)
       end
     end
   )
-  return self.map:addEntity(Wave({x = x, y = self.map.height - offset_y + wave_factor, z = 10, speed = speed}, self.direction, tiles, beach_y))
+  return self.map:addEntity(Wave({x = x, y = self.map.height - offset_y + wave_factor, z = 10, speed = speed}, self.orientation, tiles, beach_y))
 end
 
 function MapGenerator:newSea()
