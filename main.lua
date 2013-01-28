@@ -17,7 +17,6 @@ function love.load()
   game.current_state = StartMenu()
   love.audio.play(game.sounds.music[1])
   love.graphics.setMode(love.graphics.getWidth(), love.graphics.getHeight(), game.graphics.fullscreen)
-  game:start()
 end
 
 function love.draw()

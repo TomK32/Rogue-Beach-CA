@@ -9,8 +9,8 @@ function Level:initialize(level, seed)
 
   self.generator = MapGenerator(self.seed)
   self.map = Map(
-    math.floor(game.graphics.mode.width / MapView.scale.x),
-    math.floor(game.graphics.mode.height / MapView.scale.y),
+    math.floor((game.graphics.mode.width - 150) / MapView.scale.x),
+    math.floor((game.graphics.mode.height - 40) / MapView.scale.y),
     self.generator, self)
 
 end
