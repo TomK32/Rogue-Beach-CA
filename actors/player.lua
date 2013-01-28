@@ -43,7 +43,7 @@ function Player:initialize(position)
   self.score = 0
 
   self.accelleration = {
-    standing = 1.5,
+    standing = 2,
     paddling = 0.5,
     surfing = 0
   }
@@ -114,7 +114,7 @@ function Player:update(dt)
       self.current_wave = self.current_wave + dt * 100
       self.score = self.score + self.current_wave
       self:speedChange(math.sqrt(self.speed + wave.speed)/4, self.speed, wave.speed)
-      self.orientation = (self.orientation + wave.orientation) / 2
+      self:turn(- math.max(-0.2, math.min(0.2, self.orientation - wave.orientation) / 2))
     end
     self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
     self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))

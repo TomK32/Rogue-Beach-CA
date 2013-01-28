@@ -55,7 +55,7 @@ end
 -- x1, y1, x2, y2 to limit the area where to spawn
 function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
   local actor = klass()
-  actor.position.x = self.map.width / 2
+  actor.position.x = math.floor(self.map.width / 2)
   actor.position.y = 2
   actor.position.z = z or 1
   actor.orientation = math.pi * 1.5
