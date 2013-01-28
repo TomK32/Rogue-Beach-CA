@@ -63,10 +63,11 @@ unzip -q -d "$BUILD" "$BUILD/love-$VERSION-macosx-ub.zip"
 mv "$BUILD/love.app" "$BUILD/${FILENAME}.app"
 cp "$BUILD/$FILENAME.love" "$BUILD/$FILENAME.app/Contents/Resources/"
 patch "$BUILD/${FILENAME}.app/Contents/Info.plist" -i "$BUILD/osx.patch"
+cp "images/Rogue Beach.icns" "$BUILD/$FILENAME.app/Contents/Resources"
 R_PWD=`pwd`
 cd "$BUILD"
 if [ -f "${FILENAME}_macosx.zip" ]; then rm "${FILENAME}_macosx.zip"; fi
 zip -q -r "${FILENAME}_macosx.zip" "${FILENAME}.app"
-cd $R_PWD
+cd "$R_PWD"
 rm -rf "$BUILD/$FILENAME.app"
 

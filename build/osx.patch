@@ -37,7 +37,7 @@
  	<string>love</string>
  	<key>CFBundleIconFile</key>
 -	<string>Love.icns</string>
-+	<string>Love.icns</string>
++	<string>Rogue Beach.icns</string>
  	<key>CFBundleIdentifier</key>
 -	<string>org.love2d.love</string>
 +	<string>com.ananasblau.rogue-beach</string>
