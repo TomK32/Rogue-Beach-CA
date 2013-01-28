@@ -35,13 +35,19 @@ function Actor:maxSpeed()
   return self.max_speed
 end
 function Actor:speedUp()
-  self:speedChange(1)
+  self:speedChange(self:accellerationUp())
   return true
 end
 
 function Actor:speedDown()
-  self:speedChange(-1)
+  self:speedChange(self:accellerationDown())
   return true
+end
+function Actor:accellerationUp()
+  return 1
+end
+function Actor:accellerationDown()
+  return -1
 end
 
 function Actor:speedChange(val, min, max)
