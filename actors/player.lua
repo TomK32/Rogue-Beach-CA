@@ -62,7 +62,7 @@ end
 function Player:draw()
   local board = {}
   game.renderer:translate(self.position.x, self.position.y)
-  game.renderer:rotate(self.orientation + math.pi / 2)
+  game.renderer:rotate(-self.orientation - math.pi * 0.5)
   game.renderer:print('@', {0,0,0,255}, 0, 0)
   game.renderer:print('@', {255,200,50,255}, 0.1, 0.1)
   for i, tile in pairs(self.board) do
@@ -164,15 +164,15 @@ function Player:setBoard()
     }
   elseif self.state == 'paddling' then
     self.board = {
-      {x = 0, y = -1, c = '▌'},
-      {x = -1, y = 0, c = '/'},
-      {x = 1, y = 0, c = '\\'},
-      {x = 0, y = 1, c = '▌'}
+      {x = 0.2, y = -1, c = '▌'},
+      {x = -0.4, y = 0, c = '/'},
+      {x = 0.8, y = 0, c = '\\'},
+      {x = 0.2, y = 1, c = '^'}
     }
   elseif self.state == 'surfing' then
     self.board = {
-      {x = 0, y = -1, c = '▌'},
-      {x = 0, y = 1, c = '▌'}
+      {x = 0.2, y = -1, c = '▌'},
+      {x = 0.2, y = 1, c = '^'}
     }
   else
     error(1, 'player state invalid')
