@@ -50,9 +50,9 @@ function Player:initialize(position)
     surfing = 0
   }
   self.max_speed = {
-    standing = 4,
+    standing = 2,
     paddling = 1,
-    surfing = 8
+    surfing = 6
   }
   self.drag = { -- how much the player is slowed down, 1 is a full halt
     standing = 1,
@@ -91,11 +91,16 @@ function Actor:accellerationUp()
   return self.accelleration[self.state]
 end
 function Actor:accellerationDown()
-  return - self.accelleration[self.state] / 2
+  if self.state == 'surfing' then
+    return - self.speed / 2 -- break hard
+  else
+    return - self.accelleration[self.state] * 0.75
+  end
 end
 
 function Player:waitForWave()
   self.wait_for_wave = true
+  return false -- this is not a movement
 end
 
 function Player:update(dt)
@@ -121,8 +126,15 @@ function Player:update(dt)
     elseif self.state == 'surfing' and self.moved then
       self.current_wave = self.current_wave + dt * 100
       self.score = self.score + self.current_wave
-      self:speedChange(math.sqrt(self.speed + wave.speed)/4, self.speed, wave.speed)
-      self:turn(- math.max(-0.2, math.min(0.2, self.orientation - wave.orientation) / 2))
+      -- speed up 
+      self:speedChange(
+          math.min(
+                self.drag['surfing'] * math.abs(wave.speed - self.speed),
+                (wave.speed - self.speed)/2)
+            ,
+        self.speed, wave.speed * (1 - self.drag['surfing']))
+
+      self:turn(- math.max(-0.1, math.min(0.1, self.orientation - wave.orientation) / 2))
     end
     self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
     self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
