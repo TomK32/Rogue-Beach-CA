@@ -9,6 +9,10 @@ function Wave:initialize(position, orientation, tiles, beach_y)
   self.orientation = orientation
   self.sprawl = false -- countdown for when waves hit the beach
   self:updateColors(0.1)
+  self.direction = {
+    x = math.cos(self.orientation) * self.speed,
+    y = math.sin(self.orientation) * self.speed
+  }
   return self
 end
 
@@ -60,8 +64,8 @@ end
 
 function Wave:update(dt)
   self.dt = self.dt + dt
-  self.position.x = self.position.x - math.cos(self.orientation) * self.speed * dt
-  self.position.y = self.position.y - math.sin(self.orientation) * self.speed * dt
+  self.position.x = self.position.x - self.direction.x * dt
+  self.position.y = self.position.y - self.direction.y * dt
 
   if self.position.y < self.beach_y then
     self.dead = true
