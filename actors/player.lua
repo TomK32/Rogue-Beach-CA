@@ -135,8 +135,11 @@ function Player:update(dt)
                 (wave.speed - self.speed)/2)
             ,
         self.speed, wave.speed * (1 - self.drag['surfing']))
-
-      self:turn(- math.max(-0.1, math.min(0.1, self.orientation - wave.orientation) / 2))
+      local direction = 1
+      if self.orientation - wave.orientation < math.pi then
+        direction = -1
+      end
+      self:turn(direction * math.max(-0.2, math.min(0.2, math.abs(self.orientation - wave.orientation) / 2)))
     end
     self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
     self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
