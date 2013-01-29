@@ -8,7 +8,7 @@ Player.input_alternatives = {
       turnLeft = 'left',
       turnRight = 'right',
       switchState = ' ',
-      tick = 'z'
+      waitForWave = 'z'
     }
   },
   wasd = {
@@ -18,7 +18,7 @@ Player.input_alternatives = {
       turnLeft = 'a',
       turnRight = 'd',
       switchState = ' ',
-      tick = 'z'
+      waitForWave = 'z'
     }
   }
 }
@@ -35,6 +35,8 @@ function Player:initialize(position)
   self.entity_type = 'Actor'
   self.inputs = {}
   self.state = 'standing'
+  self.had_wave = false
+  self.wait_for_wave = false
   self:setBoard()
   self:setInputs(Player.input_alternatives['wasd'])
   self:setInputs(Player.input_alternatives['arrows'])
@@ -92,6 +94,10 @@ function Actor:accellerationDown()
   return - self.accelleration[self.state] / 2
 end
 
+function Player:waitForWave()
+  self.wait_for_wave = true
+end
+
 function Player:update(dt)
   self.moved = false
   local surface = self.map:surface(self.position)
@@ -100,15 +106,16 @@ function Player:update(dt)
     self:setBoard()
   end
 
-  if not Actor.update(self, dt) then
+  if not Actor.update(self, dt) and not self.wait_for_wave then
     return false
   end
-  game.ticked = self.moved
+  if self.moved then self.wait_for_wave = false end
+  game.ticked = self.moved or self.wait_for_wave
   self:speedChange(self.speed * - self.drag[self.state], 0, self:maxSpeed(self.state))
-
-  local had_wave = false
+  self.had_wave = false
   for i, wave in ipairs(self.map:waves(self.position)) do
-    had_wave = true
+    self.had_wave = true
+    self.wait_for_wave = false
     if self.state == 'paddling' then
       --self:speedChange(- (wave.speed * dt) / 16, self.speed / 2, wave.speed)
     elseif self.state == 'surfing' and self.moved then
@@ -120,7 +127,7 @@ function Player:update(dt)
     self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
     self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
   end
-  if not had_wave then
+  if not self.had_wave then
     self.current_wave = 0
     if self.state == 'surfing' then
       self.state = 'paddling'
