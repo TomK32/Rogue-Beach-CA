@@ -100,7 +100,7 @@ end
 
 function Player:waitForWave()
   self.wait_for_wave = true
-  return false -- this is not a movement
+  self.moved = false
 end
 
 function Player:update(dt)
@@ -111,7 +111,9 @@ function Player:update(dt)
     self:setBoard()
   end
 
-  if not Actor.update(self, dt) and not self.wait_for_wave then
+  Actor.update(self, dt)
+
+  if not self.moved and not self.wait_for_wave then
     return false
   end
   if self.moved then self.wait_for_wave = false end
@@ -168,6 +170,9 @@ function Player:switchState()
   end
 
   self:setBoard()
+  if self.state ~= previousState then
+    self.moved = true
+  end
   return self.state ~= previousState
 end
 
