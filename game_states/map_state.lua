@@ -42,6 +42,5 @@ function MapState:update(dt)
     self.level:update(dt)
     self.view:update()
     game.ticked = false
-    self.level.player.moved = false
   end
 end

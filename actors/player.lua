@@ -93,16 +93,17 @@ function Actor:accellerationDown()
 end
 
 function Player:update(dt)
+  self.moved = false
   local surface = self.map:surface(self.position)
   if (surface == 'Water' and self.state == 'standing') or (surface == 'Beach' and self.state ~= 'standing') then
     self:switchState()
     self:setBoard()
   end
 
-  game.ticked = self.moved
   if not Actor.update(self, dt) then
     return false
   end
+  game.ticked = self.moved
   self:speedChange(self.speed * - self.drag[self.state], 0, self:maxSpeed(self.state))
 
   local had_wave = false
@@ -126,9 +127,6 @@ function Player:update(dt)
       self:setBoard()
     end
   end
-end
-
-function Player:positionUpdated(dt)
 end
 
 function Player:switchState()

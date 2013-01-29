@@ -94,11 +94,6 @@ function Actor:update(dt)
 
   self.map:fitIntoMap(self.position)
 
-  self:positionUpdated(dt)
   return true
-end
-
-function Actor:positionUpdated()
-
 end
 
