@@ -62,7 +62,7 @@ end
 
 local function Button(state, title, x,y,w,h)
 	local c = color[state]
-	box(x,y,w,h, c.bg, c.border, state == 'active')
+	--box(x,y,w,h, c.bg, c.border, state == 'active')
 	local f = assert(love.graphics.getFont())
 	x,y = x + (w-f:getWidth(title))/2, y + (h-f:getHeight(title))/2
 	love.graphics.setColor(c.fg)

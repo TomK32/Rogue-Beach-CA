@@ -21,6 +21,7 @@ function MapState:initialize()
   self.score_view = ScoreView()
   self.score_view.player = self.level.player
   self.view:update()
+  love.graphics.setFont(game.fonts.small)
 
   love.audio.play(game.sounds.waves[1])
   game.sounds.waves[1]:setVolume(0.1)

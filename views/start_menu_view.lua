@@ -5,7 +5,8 @@ StartMenuView = class("MenuView", View)
 
 gui.core.style.color.normal.bg = {80,180,80}
 
-function StartMenuView:draw()
+function StartMenuView:drawContent()
+  love.graphics.setFont(game.fonts.regular)
   gui.core.draw()
   local x = 250
   local y = 50
@@ -14,7 +15,6 @@ function StartMenuView:draw()
     y = 20
   end
 
-  love.graphics.setFont(game.fonts.regular)
   love.graphics.scale(1.8,1.8)
   love.graphics.setColor(255,255,255,200)
   love.graphics.print('Rogue Beach, CA', x, y)
@@ -32,7 +32,7 @@ function StartMenuView:update(dt)
 
   gui.group.push({grow = "down", pos = {x, y}})
   -- start the game
-  if gui.Button({text = 'Start'}) then
+  if gui.Button({text = '[N]ew game'}) then
     game:start()
   end
   gui.group.push({grow = "down", pos = {0, 20}})
@@ -48,12 +48,4 @@ function StartMenuView:update(dt)
     love.graphics.setMode(love.graphics.getWidth(), love.graphics.getHeight(), game.graphics.fullscreen)
   end
 
-  -- screen resolutions
-  modes = love.graphics.getModes()
-  table.sort(modes, function(a, b) return a.width*a.height > b.width*b.height end)   -- sort from smallest to largest
-  for i, mode in ipairs(modes) do
-    if gui.Button({text = mode.width .. 'x' .. mode.height}) then
-      game:setMode(mode)
-    end
-  end
 end
