@@ -1,10 +1,12 @@
 # Rogue Beach, CA
 
-Born from shear madness is this roguelike game about surfing. Yes, surfing.
-The gameplay is yet unclear but expect some action at Dungeon Reef
-(South Africa), some freaky Surf Rock and other un-roguelike-y things.
+**Rogue Beach, CA** is an attempt to create a surf games in the roguelike genre.
+No fancy 3D graphics, no stunts, no tunnels, just a beach, water, waves and you,
+represented by an **@**, with your board.
 
   _it's some sort of surfing game I suppose?_ -- legacy99
+
+Website: (ananasblau.com/rogue-beach)[http://ananasblau.com/rogue-beach]
 
 ## Srsly, roguelike and surfing?
 
