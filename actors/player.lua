@@ -122,15 +122,6 @@ function Player:update(dt)
   game.ticked = self.moved or self.wait_for_wave
   self:speedChange(self.speed * - self.drag[self.state], 0, self:maxSpeed(self.state))
   self.had_wave = false
-  if true or #self.map:entitiesOfType(self.position, 'Rock') > 0 then
-    -- hit a rock, ouch
-    self.health = self.health - 1
-    if self.health <= 0 then
-      self.death_message = 'You got minced by the rocks'
-      return game:killed(self)
-    end
-  end
-
   for i, wave in ipairs(self.map:waves(self.position)) do
     self.had_wave = true
     self.wait_for_wave = false
@@ -155,6 +146,17 @@ function Player:update(dt)
     self.position.x = self.position.x - (math.cos(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
     self.position.y = self.position.y - (math.sin(wave.orientation) * dt * (wave.speed + self.speed)/4 * (1 - self.drag[self.state]))
   end
+
+  -- waves save you from getting killed
+  if not self.had_wave and #self.map:entitiesOfType(self.position, 'Rock') > 0 then
+    -- hit a rock, ouch
+    self.health = self.health - 1
+    if self.health <= 0 then
+      self.death_message = 'You got minced by the rocks'
+      return game:killed(self)
+    end
+  end
+
   if not self.had_wave then
     self.current_wave = 0
     if self.state == 'surfing' then
