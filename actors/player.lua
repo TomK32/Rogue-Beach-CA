@@ -34,6 +34,8 @@ function Player:initialize(position)
   self.dt_since_input = 0
   self.entity_type = 'Actor'
   self.inputs = {}
+  self.health = 10
+  self.death_message = nil
   self.state = 'standing'
   self.had_wave = false
   self.wait_for_wave = false
@@ -120,6 +122,15 @@ function Player:update(dt)
   game.ticked = self.moved or self.wait_for_wave
   self:speedChange(self.speed * - self.drag[self.state], 0, self:maxSpeed(self.state))
   self.had_wave = false
+  if true or #self.map:entitiesOfType(self.position, 'Rock') > 0 then
+    -- hit a rock, ouch
+    self.health = self.health - 1
+    if self.health <= 0 then
+      self.death_message = 'You got minced by the rocks'
+      return game:killed(self)
+    end
+  end
+
   for i, wave in ipairs(self.map:waves(self.position)) do
     self.had_wave = true
     self.wait_for_wave = false

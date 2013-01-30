@@ -34,6 +34,14 @@ function game:setMode(mode)
 end
 
 
+function game:startMenu()
+  game.current_state = StartMenu()
+end
+
 function game:start()
   game.current_state = MapState()
+end
+
+function game:killed(player)
+  game.current_state = FinishScreen(player)
 end

@@ -10,7 +10,7 @@ end
 
 function GameState:draw()
   if self.view then
-    self.view.draw()
+    self.view:draw()
   end
 end
 

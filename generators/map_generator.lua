@@ -122,7 +122,6 @@ end
 
 function MapGenerator:newRocks(z, y1, y2)
   self:incrementSeed(1)
-  print(y1, y2)
   local tiles = self:fillTiles(1, 1, (y2-y1), 3,
     function(x,y)
       local color_offset = (SimplexNoise.Noise2D(x/16, y/8) * 20) % 20
@@ -141,7 +140,6 @@ function MapGenerator:newRocks(z, y1, y2)
     1, (y2-y1)/self.map.height,
     0, y1)
   position.z = z
-  print(position.x, position.y, position.z, y1, y2)
   return self.map:addEntity(Rock(position, tiles))
 end
 

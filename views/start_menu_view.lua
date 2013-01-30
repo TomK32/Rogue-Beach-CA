@@ -14,15 +14,12 @@ function StartMenuView:draw()
     y = 20
   end
 
-  love.graphics.push()
   love.graphics.setFont(game.fonts.regular)
   love.graphics.scale(1.8,1.8)
   love.graphics.setColor(255,255,255,200)
   love.graphics.print('Rogue Beach, CA', x, y)
   love.graphics.setColor(255,200, 10, 255)
   love.graphics.print('Rogue Beach, CA', x-1, y-1)
-
-  love.graphics.pop()
 end
 
 function StartMenuView:update(dt)

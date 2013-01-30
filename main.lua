@@ -11,12 +11,14 @@ require 'views/view'
 require 'game_states/game_state'
 require 'game_states/start_menu'
 require 'game_states/map_state'
+require 'game_states/finish_screen'
 
 function love.load()
   game:createFonts(0)
-  game.current_state = StartMenu()
+  game:startMenu()
   love.audio.play(game.sounds.music[1])
   love.graphics.setMode(love.graphics.getWidth(), love.graphics.getHeight(), game.graphics.fullscreen)
+  game:start()
 end
 
 function love.draw()
