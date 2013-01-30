@@ -23,7 +23,6 @@ function Level:update(dt)
         entity:update(dt)
       end
       if entity.dead == true then
-        --print("Removing", entity.position.y)
         table.remove(self.map.layers[layer], i)
       end
     end

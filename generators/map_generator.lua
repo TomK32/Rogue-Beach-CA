@@ -64,7 +64,7 @@ function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
 end
 
 function MapGenerator:newWave(offset_y)
-  local wave_factor = 6
+  local wave_factor = 8
   local center = math.floor(wave_factor / 2)
   x = math.abs(math.floor(SimplexNoise.Noise2D(offset_y, wave_factor) * self.map.width))
   y = offset_y
