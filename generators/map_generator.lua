@@ -22,6 +22,9 @@ end
 function MapGenerator:randomize()
   self:newSea() -- layer 4
   self:newBeach(5, 10) -- layer 5
+  self:newRocks(7, self.map.height * 0.2, self.map.height * 0.4)
+  self:newRocks(7, self.map.height * 0.8, self.map.height * 0.9)
+  self:newRocks(7, self.map.height * 0.5, self.map.height * 0.7)
   self:newWave(1) -- waves are layer 10
   self:newWave(self.map.height / 2)
   self.level.player = self:newActor(Player, 21) -- place on the beach
@@ -41,6 +44,7 @@ end
 
 -- int, int, 0..1, 0..1, int, int
 function MapGenerator:seedPosition(seed_x,seed_y, scale_x, scale_y, offset_x, offset_y)
+  self:incrementSeed(1)
   scale_x = scale_x or 1
   scale_y = scale_y or 1
   offset_x = offset_x or 0
@@ -64,6 +68,7 @@ function MapGenerator:newActor(klass, z, x1, y1, x2, y2)
 end
 
 function MapGenerator:newWave(offset_y)
+  self:incrementSeed(1)
   local wave_factor = 8
   local center = math.floor(wave_factor / 2)
   x = math.abs(math.floor(SimplexNoise.Noise2D(offset_y, wave_factor) * self.map.width))
@@ -101,6 +106,7 @@ function MapGenerator:newSea()
 end
 
 function MapGenerator:newBeach(z, depth)
+  self:incrementSeed(1)
   local tiles = self:fillTiles(1, 1, self.map.width, depth,
     function(x,y)
       local color_offset = math.floor((self.map.height/4-y)*5)
@@ -112,6 +118,31 @@ function MapGenerator:newBeach(z, depth)
     end
   )
   return self.map:addEntity(Plane({x = 0, y = 0, z = z}, tiles, 'Beach'))
+end
+
+function MapGenerator:newRocks(z, y1, y2)
+  self:incrementSeed(1)
+  print(y1, y2)
+  local tiles = self:fillTiles(1, 1, (y2-y1), 3,
+    function(x,y)
+      local color_offset = (SimplexNoise.Noise2D(x/16, y/8) * 20) % 20
+      if color_offset < 2 then
+        return nil
+      end
+      return
+        {180,
+         140 - color_offset,
+         140 - color_offset,
+         155 }
+    end
+  )
+  local position = self:seedPosition(
+    self.seed, self.seed + 1,
+    1, (y2-y1)/self.map.height,
+    0, y1)
+  position.z = z
+  print(position.x, position.y, position.z, y1, y2)
+  return self.map:addEntity(Rock(position, tiles))
 end
 
 function MapGenerator:fillTiles(x1, y1, x2, y2, callback)

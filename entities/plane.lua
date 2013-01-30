@@ -13,9 +13,11 @@ end
 
 function Plane:draw()
   game.renderer:translate(self.position.x, self.position.y)
-  for x, row in pairs(self.tiles) do
-    for y, tile in pairs(row) do
-      self:drawTile(x, y, tile)
+  for x, row in ipairs(self.tiles) do
+    for y, tile in ipairs(row) do
+      if tile then
+        self:drawTile(x, y, tile)
+      end
     end
   end
 end

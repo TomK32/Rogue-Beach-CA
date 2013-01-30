@@ -10,6 +10,7 @@ require 'actors/player'
 require 'entities/entity'
 require 'entities/plane'
 require 'entities/wave'
+require 'entities/rock'
 
 MapState = class("MapState", GameState)
 function MapState:initialize()
