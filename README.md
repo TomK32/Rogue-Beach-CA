@@ -59,6 +59,8 @@ The checklist according to mikipedia:
 
 So it is, strangely, a roguelike.
 
+  _Rocks!_ -- @Raptorendame
+
 ## Screenshots
 
     +-------+
