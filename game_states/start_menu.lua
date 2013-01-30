@@ -10,6 +10,3 @@ function StartMenu:update(dt)
   self.view:update(dt)
 end
 
-function StartMenu:draw()
-  self.view:draw()
-end
