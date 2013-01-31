@@ -8,7 +8,7 @@ NAME="Rogue Beach, CA"
 # Version is {last tag}-{commits since last tag}.
 # e.g: 0.1.2-3
 GAME_VERSION=`git tag|tail -1`
-REVISION=`git log ${GAME_VERSION}..HEAD --pretty=format:'' | wc -l | sed -e 's/ //g'`
+REVISION=`git log ${GAME_VERSION}..HEAD --oneline | wc -l | sed -e 's/ //g'`
 
 FILENAME="$NAME-$GAME_VERSION-$REVISION"
 VERSION=0.8.0
