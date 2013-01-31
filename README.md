@@ -100,6 +100,12 @@ game, be my guest.
   * [DONE] When in water, change from a timer to a round based system
   * [DONE] Player laying on surfboard while paddling out to the waves
   * [DONE] Player standing up and surfing
+* Graphics
+  * Player
+  * Surf boards
+  * Wild life
+  * Promo kit:
+    * [DONE] Square app icon
 * Waves building up and collapsing
 * [DONE] Sound for waves, as audio sources with the Player as listener
   * [DONE] Surf music
@@ -121,7 +127,10 @@ game, be my guest.
     * turtles
     * birds
     * sharks
-* Beach-wide ranking for Awesomeness, include NPCs (championsships?)
+* Scenery
+  * [DONE] Rocks (hurt surfer unless riding a wave)
+  * Coral reef (like rocks but looking good)
+* Beach-wide ranking for Awesomeness, including NPCs (championsships?)
 * Replay
   * Record player movements once he's on the board
   * Store gamestate in keyframes every x seconds
